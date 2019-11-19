@@ -14,3 +14,9 @@ headers = {
 
 html = requests.get(url, headers=headers)
 print(html)
+
+# firebase connection
+# from firebase.firebase import FirebaseApplication
+# # add in url created from "My Room Temp" firebase database
+# url = "https://test-1f125.firebaseio.com/"
+# firebase = FirebaseApplication(url, None)
