@@ -1,9 +1,12 @@
 import requests
 import json
 import re
+# getting date from firebase (json)
 r = requests.get('https://stan-izone.firebaseio.com/users.json')
 
 print(r.json())
+
+# webscraping
 url = 'https://www.lazada.sg/products/acer-eb321hqu-d-315-inch-wqhd-ips-new-monitor-i444318328-s1181378318.html?spm=a2o42.searchlist.list.1.4f5a5c5bfVd3HS&search=1'
 
 headers = {
