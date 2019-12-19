@@ -1,9 +1,10 @@
 from selenium import webdriver
 from selenium.common.exceptions import *
 from selenium.webdriver.chrome.options import Options
+import pandas as pd
 
 opts = Options()
-opts.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36")
+opts.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36")
 
 webdriver_path= "/usr/local/bin/chromedriver"
 Lazada_url = "https://www.lazada.sg"
@@ -41,8 +42,11 @@ for i in range(total_of_result):
 # for price in item_prices:
 #     prices_list.append(price.text)
 
-print(titles_list)
-print(prices_list)
+# print(titles_list)
+# print(prices_list)
+
+dfL = pd.DataFrame(zip(titles_list, prices_list), columns=['ItemName', 'Price'])
+print(dfL)
 
 browser.quit()
 
