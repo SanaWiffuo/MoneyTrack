@@ -1,22 +1,21 @@
-import requests
-import json
-import re
-# getting date from firebase (json)
-r = requests.get('https://stan-izone.firebaseio.com/users.json')
+from lazada import scrap_lazada
 
-print(r.json())
+from shopee import scrap_shopee
 
-# webscraping
-url = 'https://www.lazada.sg/products/acer-eb321hqu-d-315-inch-wqhd-ips-new-monitor-i444318328-s1181378318.html?spm=a2o42.searchlist.list.1.4f5a5c5bfVd3HS&search=1'
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'}
+title_lst = []
+price_lst = []
 
-html = requests.get(url, headers=headers)
-print(html)
+temp1,temp2 = scrap_lazada()
+for i in range(len(temp1)):
+    title_lst.append(temp1[i])
+    price_lst.append(temp2[i])
 
-# firebase connection
-# from firebase.firebase import FirebaseApplication
-# # add in url created from "My Room Temp" firebase database
-# url = "https://test-1f125.firebaseio.com/"
-# firebase = FirebaseApplication(url, None)
+temp1,temp2 = scrap_shopee()
+for i in range(len(temp1)):
+    title_lst.append(temp1[i])
+    price_lst.append(temp2[i])
+
+    
+print(title_lst)
+print(price_lst)
