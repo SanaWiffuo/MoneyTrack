@@ -1,10 +1,12 @@
 from selenium import webdriver
-from selenium.common.exceptions import *
+from fake_useragent import UserAgent
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
 
 opts = Options()
-opts.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36")
+ua = UserAgent()
+userAgent = ua.random
+opts.add_argument(f'user-agenta={userAgent}')
 
 webdriver_path= "/usr/local/bin/chromedriver"
 Lazada_url = "https://www.lazada.sg"
