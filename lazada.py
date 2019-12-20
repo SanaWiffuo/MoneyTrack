@@ -39,16 +39,9 @@ if len(item_titles)==0:
 for i in range(total_of_result):
     titles_list.append(item_titles[i].text)
     prices_list.append(item_prices[i].text)
-# for title in item_titles:
-#     titles_list.append(title.text)
-# for price in item_prices:
-#     prices_list.append(price.text)
 
-# print(titles_list)
-# print(prices_list)
 
 dfL = pd.DataFrame(zip(titles_list, prices_list), columns=['ItemName', 'Price'])
 print(dfL)
 
 browser.quit()
-
