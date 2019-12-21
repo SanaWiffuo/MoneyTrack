@@ -1,8 +1,6 @@
 import requests
 import pandas as pd
 from fake_useragent import UserAgent
-import time
-import random
 
 def scrap_shopee(keyword_search,total_of_result):
     
