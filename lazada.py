@@ -2,6 +2,8 @@ from selenium import webdriver
 from fake_useragent import UserAgent
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
+import sys
+import requests
 
 def scrap_lazada(search_item,total_of_result):
     opts = Options()
@@ -33,22 +35,30 @@ def scrap_lazada(search_item,total_of_result):
     titles_list = []
     prices_list = []
     url_list = []
+    ratings_list =[]
     
     if len(item_titles)==0:
         print("Fail")
+        sys.exit()
 
     
     for i in range(total_of_result):
         titles_list.append(item_titles[i].text)
         prices_list.append(item_prices[i].text)
         url_list.append(links[i].get_attribute("href"))
+    
+    for i in range(len(url_list)):
+        browser.get("{}".format(url_list[i]))
+        ratings = browser.find_elements_by_class_name('score-average')
+        ratings_list.append(ratings[0].text)
 
-
-    dfL = pd.DataFrame(zip(titles_list, prices_list,url_list), columns=['ItemName', 'Price','Url'])
+    
+    dfL = pd.DataFrame(zip(titles_list, prices_list,ratings_list,url_list), columns=['ItemName', 'Price','Ratings','Url'])
+    dfL['Platform'] = 'Lazada'
     print(dfL)
 
     browser.quit()
     
-    return titles_list,prices_list
+    return titles_list,prices_list,ratings_list,url_list
 
 scrap_lazada("monitor",10)
