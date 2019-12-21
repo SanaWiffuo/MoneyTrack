@@ -28,22 +28,27 @@ def scrap_lazada(search_item,total_of_result):
 
     item_titles = browser.find_elements_by_class_name('c16H9d')
     item_prices = browser.find_elements_by_class_name('c13VH6')
-
-
+    links = browser.find_elements_by_xpath("//div[@class='cRjKsc']/a")
+    
     titles_list = []
     prices_list = []
-
+    url_list = []
+    
     if len(item_titles)==0:
         print("Fail")
-        
+
+    
     for i in range(total_of_result):
         titles_list.append(item_titles[i].text)
         prices_list.append(item_prices[i].text)
+        url_list.append(links[i].get_attribute("href"))
 
 
-    # dfL = pd.DataFrame(zip(titles_list, prices_list), columns=['ItemName', 'Price'])
-    # print(dfL)
+    dfL = pd.DataFrame(zip(titles_list, prices_list,url_list), columns=['ItemName', 'Price','Url'])
+    print(dfL)
 
     browser.quit()
     
     return titles_list,prices_list
+
+scrap_lazada("monitor",10)
