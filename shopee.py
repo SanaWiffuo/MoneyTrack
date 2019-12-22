@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 from fake_useragent import UserAgent
+import sys
 
 def scrap_shopee(keyword_search,total_of_result):
     
@@ -44,6 +45,9 @@ def scrap_shopee(keyword_search,total_of_result):
         url_list.append(url+"-i.{}.{}".format(item['shopid'],item['itemid'])) #i wrote these based on the structure of the url by combining the name + shopid + itemid
     print(url_list)
     
+    if len(titles_list)==0:
+        print("Fail")
+        sys.exit()
     
     Shopee = pd.DataFrame(zip(titles_list, prices_list,ratings_list,url_list), columns=['ItemName', 'Price','Ratings',"Url"])
     Shopee['Platform'] = 'Shopee'
