@@ -51,10 +51,10 @@ def scrap_lazada(search_item,total_of_result):
         
 
  
-    df = pd.DataFrame([t.__dict__ for t in product_lst])
-    print(df)
+    # df = pd.DataFrame([t.__dict__ for t in product_lst])
+    # print(df)
 
     browser.quit()
     
     return product_lst
-scrap_lazada("demon slayer",10)
+# scrap_lazada("demon slayer",10)
