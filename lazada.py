@@ -33,11 +33,6 @@ def scrap_lazada(search_item,total_of_result):
     item_prices = browser.find_elements_by_class_name('c13VH6')
     links = browser.find_elements_by_xpath("//div[@class='cRjKsc']/a")
     
-    # titles_list = []
-    # prices_list = []
-    # url_list = []
-    # ratings_list =[]
-    
     product_lst = []
     
     if len(item_titles)==0:
@@ -46,26 +41,18 @@ def scrap_lazada(search_item,total_of_result):
 
     
     for i in range(total_of_result):
-        # titles_list.append(item_titles[i].text)
-        # prices_list.append(item_prices[i].text)
-        # url_list.append(links[i].get_attribute("href"))
         product_lst.append(Lazada(item_titles[i].text,item_prices[i].text,"",links[i].get_attribute("href")))
         
     
     for i in range(len(product_lst)):
         browser.get("{}".format(product_lst[i].url))
         ratings = browser.find_elements_by_class_name('score-average')
-        # ratings_list.append(ratings[0].text)
         product_lst[i].ratings = ratings[0].text
         
 
  
-    # dfL = pd.DataFrame(zip(titles_list, prices_list,ratings_list,url_list), columns=['ItemName', 'Price','Ratings','Url'])
-    # dfL['Platform'] = 'Lazada'
-    # print(dfL)
-    
-    for i in product_lst:
-        print(i.name,i.price,i.ratings,i.url,i.platform)
+    df = pd.DataFrame([t.__dict__ for t in product_lst])
+    print(df)
 
     browser.quit()
     
