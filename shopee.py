@@ -17,21 +17,13 @@ def scrap_shopee(keyword_search,total_of_result):
     url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword={}&limit=100&newest=0&oanrder=desc&page_type=search'.format(keyword_search)
 
     r = requests.get(url, headers = headers).json()
-    
-    
-    # titles_list = []
-    # prices_list = []
-    # ratings_list = []
-    # url_list = []
+       
     product_lst = []
     num = 0
     for item in r['items']:
         if total_of_result == num:
             break
-        # titles_list.append(item['name'])
-        # prices_list.append("$"+str(item['price_min']/100000))
-        # ratings_list.append(item['item_rating'].get("rating_star"))
-        
+
         url = "https://shopee.sg/"
         for i in item['name']: 
             
@@ -46,9 +38,9 @@ def scrap_shopee(keyword_search,total_of_result):
                     continue
                 url+="-"
         num+=1   
-        # url_list.append(url+"-i.{}.{}".format(item['shopid'],item['itemid'])) #i wrote these based on the structure of the url by combining the name + shopid + itemid
-        product_lst.append(Shopee(item['name'],"$"+str(item['price_min']/100000),item['item_rating'].get("rating_star"),url+"-i.{}.{}".format(item['shopid'],item['itemid'])))
         
+        product_lst.append(Shopee(item['name'],"$"+str(item['price_min']/100000),item['item_rating'].get("rating_star"),url+"-i.{}.{}".format(item['shopid'],item['itemid'])))
+        #i wrote these based on the structure of the url by combining the name + shopid + itemid
     
     
     if len(product_lst)==0:
