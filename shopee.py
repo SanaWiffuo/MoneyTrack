@@ -15,7 +15,7 @@ def scrap_shopee(keyword_search,total_of_result):
     'Referer': '{}search?keyword={}'.format(Shopee_url, keyword_search)
     }
     url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword={}&limit=100&newest=0&oanrder=desc&page_type=search'.format(keyword_search)
-    print(url)
+    
     r = requests.get(url, headers = headers).json()
        
     product_lst = []
