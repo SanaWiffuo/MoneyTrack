@@ -47,14 +47,15 @@ def scrap_lazada(search_item,total_of_result):
     for i in range(len(product_lst)):
         browser.get("{}".format(product_lst[i].url))
         ratings = browser.find_elements_by_class_name('score-average')
-        product_lst[i].ratings = ratings[0].text
-        
-
- 
-    # df = pd.DataFrame([t.__dict__ for t in product_lst])
-    # print(df)
+        ratings_count = browser.find_elements_by_class_name('count')
+        num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
+        product_lst[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
+    
 
     browser.quit()
     
     return product_lst
-# scrap_lazada("demon slayer",10)
+
+if __name__ == "__main__":
+    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("monitor",10)])
+    print(df)
