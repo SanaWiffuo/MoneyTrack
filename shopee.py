@@ -15,7 +15,7 @@ def scrap_shopee(keyword_search,total_of_result):
     'Referer': '{}search?keyword={}'.format(Shopee_url, keyword_search)
     }
     url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword={}&limit=100&newest=0&oanrder=desc&page_type=search'.format(keyword_search)
-
+    print(url)
     r = requests.get(url, headers = headers).json()
        
     product_lst = []
@@ -39,7 +39,8 @@ def scrap_shopee(keyword_search,total_of_result):
                 url+="-"
         num+=1   
         
-        product_lst.append(Shopee(item['name'],"$"+str(item['price_min']/100000),item['item_rating'].get("rating_star"),url+"-i.{}.{}".format(item['shopid'],item['itemid'])))
+        product_lst.append(Shopee(item['name'],"$"+str(item['price_min']/100000),str(round(item['item_rating'].get("rating_star"),2))+"("+str(int(sum(item['item_rating'].get("rating_count"))/2))+")",url+"-i.{}.{}".format(item['shopid'],item['itemid'])))
+        
         #i wrote these based on the structure of the url by combining the name + shopid + itemid
     
     
@@ -47,10 +48,9 @@ def scrap_shopee(keyword_search,total_of_result):
         print("Fail")
         sys.exit()
     
-   
-    # df = pd.DataFrame([t.__dict__ for t in product_lst])
-    # print(df)
     
     return product_lst
-
-# scrap_shopee("food",10)
+if __name__ == "__main__":
+    df = pd.DataFrame([t.__dict__ for t in scrap_shopee("iphone 11 pro",5)])
+    print(df)
+    
