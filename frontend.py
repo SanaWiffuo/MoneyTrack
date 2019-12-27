@@ -15,24 +15,29 @@ window.title("Productify")
 window.resizable(0, 0)
 window.attributes("-fullscreen", True) 
 def result():
-    l = scrap_shopee("food", 10)
-    for i in l:
-        label = Label(window, text= str(i.name))
-        label.pack()
-        label = Label(window, text= str(i.url))
-        label.pack()
+    l = scrap_shopee("noodles", 10)
+    for i in range(len(l)):
+        for j in range(len(l[i])):
+            name = Label(window, text= str(i.name))
+            name.grid(column=j,row=i+1)
+            price = Label(window, text= str(i.price))
+            price.grid(column=j,row=i+1)
+            ratings = Label(window, text= str(i.ratings))
+            ratings.grid(column=j,row=i+1)
+            url = Label(window, text= str(i.url))
+            url.grid(column=j,row=i+1)
 # def printSomething():
 #     # if you want the button to disappear:
 #     # button.destroy() or button.pack_forget()
 #     label = Label(window, text= "")
 #     #this creates a new label to the GUI
 #     label.pack() 
-Label(window, text="Welcome to Productify",
-              width=50).pack()
-Label(window, text="Search for the cheapest product", width=50).pack()
+# Label(window, text="Welcome to Productify",
+#               width=50).pack()
+# Label(window, text="Search for the cheapest product", width=50).pack()
 
 button = Button(window, text="Print Me", command=result) 
-button.pack()
+button.grid(column=0,row=1)
 
 
 
