@@ -13,36 +13,28 @@ window = Tk()
 # window.geometry('1400x900')
 window.title("Productify")
 window.resizable(0, 0)
-window.attributes("-fullscreen", True) 
+window.attributes("-fullscreen", True)
+
+
 def result():
     l = scrap_shopee("noodles", 10)
     for i in range(len(l)):
-        for j in range(len(l[i])):
-            name = Label(window, text= str(i.name))
-            name.grid(column=j,row=i+1)
-            price = Label(window, text= str(i.price))
-            price.grid(column=j,row=i+1)
-            ratings = Label(window, text= str(i.ratings))
-            ratings.grid(column=j,row=i+1)
-            url = Label(window, text= str(i.url))
-            url.grid(column=j,row=i+1)
-# def printSomething():
-#     # if you want the button to disappear:
-#     # button.destroy() or button.pack_forget()
-#     label = Label(window, text= "")
-#     #this creates a new label to the GUI
-#     label.pack() 
+        name = Label(window, text=str(i.name))
+        name.grid(column=0, row=i+1)
+        price = Label(window, text=str(i.price))
+        price.grid(column=1, row=i+1)
+        ratings = Label(window, text=str(i.ratings))
+        ratings.grid(column=2, row=i+1)
+        url = Label(window, text=str(i.url))
+        url.grid(column=3, row=i+1)
+
 # Label(window, text="Welcome to Productify",
 #               width=50).pack()
 # Label(window, text="Search for the cheapest product", width=50).pack()
 
-button = Button(window, text="Print Me", command=result) 
-button.grid(column=0,row=1)
 
-
-
-
-
+button = Button(window, text="Print Me", command=result)
+button.grid(column=0, row=1)
 
 
 # tkinter.Entry(window, width=10, relief=tkinter.RIDGE).pack()
