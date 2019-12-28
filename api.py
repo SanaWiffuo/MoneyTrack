@@ -1,8 +1,18 @@
 import flask
+from flask import render_template
 from shopee import *
+from flask_table import Table, Col
+
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+
+
+class ItemTable(Table):
+    name = Col('Name')
+    price = Col('Price')
+    ratings = Col('Ratings')
+    url = Col('Url')
 
 
 @app.route('/', methods=['GET'])
@@ -12,12 +22,9 @@ def home():
 
 @app.route('/shoppe', methods=['GET'])
 def shoppe():
-    line = ""
-    product = scrap_shopee("monitor", 5)
-    for i in product:
-        line += """ <tr ><td >{0}</td><td >{1}</td><td >{2}</td><td >{3}</td></tr >""".format(
-            i.name, i.price, i.ratings, i.url)
-    return"""<table ><tr ><th >Name< /th ><th >Price< /th ><th >Ratings< /th ><th >Url< /th ></tr >{}</table >""".format(line)
+    product = scrap_shopee("iphone 11 pro", 5)
+    table = ItemTable(product)
+    return render_template("index.html", table=table)
 
 
 app.run()
