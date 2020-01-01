@@ -10,14 +10,6 @@ Bootstrap(app)
 app.config["DEBUG"] = True
 
 
-class ItemTable(Table):
-    name = Col('Name')
-    price = Col('Price')
-    ratings = Col('Ratings')
-    url = Col('Url')
-    platform = Col('platform')
-
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == "POST":
