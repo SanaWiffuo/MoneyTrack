@@ -1,10 +1,12 @@
-import flask
-from flask import render_template
+from flask import Flask, render_template, request, redirect, url_for
 from shopee import *
+from lazada import *
 from flask_table import Table, Col
+from flask_bootstrap import Bootstrap
 
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
+Bootstrap(app)
 app.config["DEBUG"] = True
 
 
@@ -13,18 +15,26 @@ class ItemTable(Table):
     price = Col('Price')
     ratings = Col('Ratings')
     url = Col('Url')
+    platform = Col('platform')
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return "<h1>Distant Reading Archive</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
+    if request.method == "POST":
+        item = request.form['item']
+        num = request.form['num']
+        return redirect('/search/{}/{}'.format(item, num))
+    return render_template("index.html")
 
 
-@app.route('/shoppe', methods=['GET'])
-def shoppe():
-    product = scrap_shopee("iphone 11 pro", 5)
-    table = ItemTable(product)
-    return render_template("index.html", table=table)
+@app.route('/search/<string:item>/<int:num>', methods=['GET'])
+def search(item, num):
+    try:
+        product = scrap_shopee(item, num)
+        product += scrap_lazada(item, num)
+        return render_template("results.html", products=product)
+    except Exception:
+        return render_template("error.html")
 
 
 app.run()

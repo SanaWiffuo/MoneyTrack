@@ -1,0 +1,15 @@
+{% extends "bootstrap/base.html" %} {% block title %}Productify{% endblock %}
+{%block content%}
+<div class="container-fluid">
+  <h1>Welcome to Productify</h1>
+  <p>Search for your products</p>
+
+  <form method="post">
+    Enter Product name:
+    <input type="text" name="item" /><br />
+    Enter number of results:
+    <input type="text" name="num" /><br />
+    <input type="submit" value="Submit" />
+  </form>
+</div>
+{% endblock %}
