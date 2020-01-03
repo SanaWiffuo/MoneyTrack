@@ -32,7 +32,14 @@ def scrap_lazada(search_item,total_of_result):
     item_titles = browser.find_elements_by_class_name('c16H9d')
     item_prices = browser.find_elements_by_class_name('c13VH6')
     links = browser.find_elements_by_xpath("//div[@class='cRjKsc']/a")
-    
+    # pic_links = browser.find_elements_by_xpath("//div[@class='cRjKsc']/a/img")
+    # pic_links = browser.find_elements_by_class_name('c1ZEkM')
+    # print(len(pic_links))
+    # for i in range(len(pic_links)):
+    #     try:
+    #         print(pic_links[i].get_attribute("src"))
+    #     except IndexError:
+    #         pass
     product_lst = []
     
     if len(item_titles)==0:
@@ -41,7 +48,10 @@ def scrap_lazada(search_item,total_of_result):
 
     
     for i in range(total_of_result):
-        product_lst.append(Lazada(item_titles[i].text,item_prices[i].text,"",links[i].get_attribute("href")))
+        try:
+            product_lst.append(Lazada(item_titles[i].text,item_prices[i].text,"",links[i].get_attribute("href"),""))
+        except IndexError:
+            pass
         
     
     for i in range(len(product_lst)):
@@ -50,12 +60,14 @@ def scrap_lazada(search_item,total_of_result):
         ratings_count = browser.find_elements_by_class_name('count')
         num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
         product_lst[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-    
+        pic_links = browser.find_elements_by_xpath("//div[@class='gallery-preview-panel__content']/img")
+        product_lst[i].pic = pic_links[0].get_attribute('src')
+        print(product_lst[i].pic)
 
     browser.quit()
     
     return product_lst
 
 if __name__ == "__main__":
-    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("monitor",10)])
+    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("adidas shoes",5)])
     print(df)
