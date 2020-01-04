@@ -1,5 +1,5 @@
 class Product:
-    def __init__(self, name, price, ratings, url, pic):
+    def __init__(self, name, price, ratings, url , pic):
         self.name = name
         self.price = price
         self.ratings = ratings
@@ -14,6 +14,7 @@ class Lazada(Product):
 
 
 class Shopee(Product):
-    def __init__(self, name, price, ratings, url):
-        super().__init__(name, price, ratings, url)
+    def __init__(self, name, price, ratings, url, pic):
+        super().__init__(name, price, ratings, url, pic)
         self.platform = "Shopee"
+
