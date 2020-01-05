@@ -1,12 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 from shopee import *
 from lazada import *
-from flask_table import Table, Col
-from flask_bootstrap import Bootstrap
 
 
 app = Flask(__name__)
-Bootstrap(app)
 app.config["DEBUG"] = True
 
 
