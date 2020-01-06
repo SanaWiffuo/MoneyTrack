@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from shopee import *
-from lazada import *
+from test2 import *
 
 
 app = Flask(__name__)
