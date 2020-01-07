@@ -68,6 +68,7 @@ def scrap_shopee(keyword_search, total_of_result):
         for product in products_json:
             try:
                 product_lst[i].pic = json.loads(product)['image']
+                print(product_lst[i].pic)
             except KeyError:
                 pass
             

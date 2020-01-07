@@ -29,6 +29,7 @@ def scrap_lazada(search_item,total_of_result):
     search_bar.send_keys(search_item)
     search_bar.submit()
 
+    
     item_titles = browser.find_elements_by_class_name('c16H9d')
     item_prices = browser.find_elements_by_class_name('c13VH6')
     links = browser.find_elements_by_xpath("//div[@class='cRjKsc']/a")
@@ -60,5 +61,5 @@ def scrap_lazada(search_item,total_of_result):
     return product_lst
 
 if __name__ == "__main__":
-    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("adidas shoes",10)])
+    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("adidas shoes",1)])
     print(df)
