@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.options import Options
 
 
 def scrap_lazada(search_item,total_of_result):
-    my_url = "https://www.lazada.sg/catalog/?q={}&_keyori=ss&from=input&spm=a2o42.home.search.go.654346b5smznqb".format(search_item)
+    my_url = "https://www.lazada.sg/catalog/?q={}".format(search_item)
 
     ua = UserAgent()
     userAgent = ua.random
@@ -48,5 +48,5 @@ def scrap_lazada(search_item,total_of_result):
 #     results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
 # browser.quit()
 if __name__ == "__main__":
-    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("keyboard",5)])
+    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("mineral water",5)])
     print(df)
