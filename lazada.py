@@ -61,5 +61,5 @@ def scrap_lazada(search_item,total_of_result):
     return product_lst
 
 if __name__ == "__main__":
-    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("adidas shoes",1)])
+    df = pd.DataFrame([t.__dict__ for t in scrap_lazada("adidas shoes",20)])
     print(df)
