@@ -6,8 +6,8 @@ import pandas as pd
 from selenium import webdriver
 from fake_useragent import UserAgent
 from selenium.webdriver.chrome.options import Options
-import time
 import queue
+
 def scrap_lazada(search_item,total_of_result,queue):
     my_url = "https://www.lazada.sg/catalog/?q={}".format(search_item)
 
@@ -42,7 +42,7 @@ def scrap_lazada(search_item,total_of_result,queue):
         ratings_count = browser.find_elements_by_class_name('count')
         num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
         results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-        print(results[i].ratings)
+        # print(results[i].ratings)
     browser.quit()
     queue.put(results)
     return results

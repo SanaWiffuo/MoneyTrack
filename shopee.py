@@ -7,9 +7,10 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-import time
 import json
 import queue
+import time
+
 def scrap_shopee(keyword_search, total_of_result,queue):
 
     ua = UserAgent()
@@ -69,7 +70,7 @@ def scrap_shopee(keyword_search, total_of_result,queue):
         for product in products_json:
             try:
                 product_lst[i].pic = json.loads(product)['image']
-                print(product_lst[i].pic)
+                # print(product_lst[i].pic)
             except KeyError:
                 pass
             
