@@ -9,8 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import json
-
-def scrap_shopee(keyword_search, total_of_result):
+import queue
+def scrap_shopee(keyword_search, total_of_result,queue):
 
     ua = UserAgent()
     userAgent = ua.random
@@ -22,7 +22,7 @@ def scrap_shopee(keyword_search, total_of_result):
     }
     url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword={}&limit=100&newest=0&oanrder=desc&page_type=search'.format(
         keyword_search)
-    print(url)
+    # print(url)
     r = requests.get(url, headers=headers).json()
 
     product_lst = []
@@ -48,6 +48,7 @@ def scrap_shopee(keyword_search, total_of_result):
 
         product_lst.append(Shopee(item['name'], "$"+str(item['price_min']/100000), str(round(item['item_rating'].get("rating_star"), 2))+"("+str(
             int(sum(item['item_rating'].get("rating_count"))/2))+")", url+"-i.{}.{}".format(item['shopid'], item['itemid']),""))
+        
         # i wrote these based on the structure of the url by combining the name + shopid + itemid
         
         
@@ -77,10 +78,10 @@ def scrap_shopee(keyword_search, total_of_result):
     if len(product_lst) == 0:
         print("Fail")
         sys.exit()
-
+    queue.put(product_lst)
     return product_lst
 
 
-if __name__ == "__main__":
-    df = pd.DataFrame([t.__dict__ for t in scrap_shopee("monitor", 5)])
-    print(df)
+# if __name__ == "__main__":
+#     df = pd.DataFrame([t.__dict__ for t in scrap_shopee("monitor", 5)])
+#     print(df)
