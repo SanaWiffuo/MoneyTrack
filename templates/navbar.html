@@ -16,10 +16,13 @@
     />
     <style>
       .navbar-brand {
-        font-size: 40px;
+        font-size: 36px;
         background: -webkit-linear-gradient(#2ebf91, #8360c3);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+      }
+      header {
+        border-bottom: 2px solid black;
       }
     </style>
   </head>
@@ -30,6 +33,21 @@
         <a class="navbar-brand" href="#">
           Productify
         </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Search </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="track.html">Track</a>
+            </li>
+          </ul>
+        </div>
+        <a class="nav-link" href="login.html">Login</a>
+        <button type="button" class="btn btn-outline-primary">
+          Sign up
+        </button>
         <button
           class="navbar-toggler"
           type="button"
@@ -41,58 +59,8 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#"
-                >Home <span class="sr-only">(current)</span></a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-          </ul>
-        </div>
       </nav>
     </header>
-    <main class="container">
-      <div class="text-center">
-        <h1>Welcome to Productify</h1>
-        <p>Search for your products</p>
-      </div>
-
-      <form>
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success my-2" type="submit">
-          Search
-        </button>
-      </form>
-    </main>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
