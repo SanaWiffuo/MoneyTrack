@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from shopee import *
-from test2 import *
+from lazada import *
 from threading import Thread
 import queue
 

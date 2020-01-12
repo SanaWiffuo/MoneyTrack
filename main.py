@@ -1,4 +1,4 @@
-from test2 import scrap_lazada
+from lazada import scrap_lazada
 from shopee import scrap_shopee
 import pandas as pd
 from threading import Thread
