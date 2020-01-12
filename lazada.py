@@ -29,9 +29,9 @@ def func1(results,queue):
         ratings_count = browser.find_elements_by_class_name('count')
         num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
         results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-        print(results[i].ratings)
+        # print(results[i].ratings)
         aList.append(results[i])
-        print("func1")
+        # print("func1")
         
     browser.quit()
     queue.put(aList)
@@ -57,9 +57,9 @@ def func2(results,queue):
         ratings_count = browser.find_elements_by_class_name('count')
         num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
         results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-        print(results[i].ratings)
+        # print(results[i].ratings)
         aList.append(results[i])
-        print("func2")
+        # print("func2")
         
     browser.quit()
     queue.put(aList)
@@ -90,10 +90,9 @@ def scrape(search_item,total_of_result):
     return results
 
 
-def scrap_lazada(search_item, total_of_result,queue):
+def scrap_lazada(search_item, total_of_result,queue,over):
     lst = scrape(search_item, total_of_result)
-    df = pd.DataFrame([t.__dict__ for t in lst])
-    print(df)
+
     l = Thread(target=func2 ,args=(lst,queue))
     l.start()
     s = Thread(target=func1,args=(lst,queue))
@@ -103,11 +102,11 @@ def scrap_lazada(search_item, total_of_result,queue):
     s.join()
     l.join()
     result += queue.get()
-    
+    over.put(result)
     return result
 
-if __name__ == "__main__":
-    queue = queue.Queue()
-    lst = scrap_lazada("monitor",5,queue)
-    df = pd.DataFrame([t.__dict__ for t in lst])
-    print(df)
+# if __name__ == "__main__":
+#     queue = queue.Queue()
+#     lst = scrap_lazada("monitor",5,queue)
+#     df = pd.DataFrame([t.__dict__ for t in lst])
+#     print(df)

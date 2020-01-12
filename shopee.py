@@ -125,23 +125,24 @@ def scrape(keyword_search, total_of_result):
     
     return product_lst
 
-def scrap_shopee(search_item, total_of_result,queue):
+def scrap_shopee(search_item, total_of_result,queue,over):
     lst = scrape(search_item, total_of_result)
+    
     l = Thread(target=func2 ,args=(lst,queue))
     l.start()
     s = Thread(target=func1,args=(lst,queue))
     s.start()
     
-
     result = queue.get()
     s.join()
     l.join()
     result += queue.get()
     
+    over.put(result)
     return result
 
-if __name__ == "__main__":
-    queue = queue.Queue()
-    result = scrap_shopee("iphone 11 pro",5,queue)    
-    df = pd.DataFrame([t.__dict__ for t in result])
-    print(df)
+# if __name__ == "__main__":
+#     queue = queue.Queue()
+#     result = scrap_shopee("iphone 11 pro",5,queue)    
+#     df = pd.DataFrame([t.__dict__ for t in result])
+#     print(df)
