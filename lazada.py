@@ -29,9 +29,9 @@ def func1(results,queue):
         ratings_count = browser.find_elements_by_class_name('count')
         num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
         results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-        # print(results[i].ratings)
+        print("l-func1 " + results[i].ratings)
         aList.append(results[i])
-        # print("func1")
+
         
     browser.quit()
     queue.put(aList)
@@ -57,9 +57,9 @@ def func2(results,queue):
         ratings_count = browser.find_elements_by_class_name('count')
         num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
         results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-        # print(results[i].ratings)
+        print("l-func2 " + results[i].ratings)
         aList.append(results[i])
-        # print("func2")
+       
         
     browser.quit()
     queue.put(aList)

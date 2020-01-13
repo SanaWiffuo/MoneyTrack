@@ -7,8 +7,8 @@ import queue
 l_queue = queue.Queue()
 s_queue = queue.Queue()
 over = queue.Queue()
-search_item = input("Please enter the product name:")
-total_of_result = int(input("Please enter the number of result:"))
+search_item = "iphone 11 pro" #input("Please enter the product name:")
+total_of_result = 10 #int(input("Please enter the number of result:"))
 
 l = Thread(target=scrap_lazada ,args=(search_item, total_of_result,l_queue,over))
 l.start()
@@ -23,3 +23,4 @@ result += over.get()
 if __name__ == "__main__":
     df = pd.DataFrame([t.__dict__ for t in result])
     print(df)
+    

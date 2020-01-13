@@ -37,8 +37,8 @@ def func1(product_lst,queue):
             try:
                 product_lst[i].pic = json.loads(product)['image']
                 aList.append(product_lst[i])
-                print("func1")
-                print(product_lst[i].pic)
+                print("s-func1" + product_lst[i].pic)
+                
                 
             except KeyError:
                 pass
@@ -71,8 +71,8 @@ def func2(product_lst,queue):
             try:
                 product_lst[i].pic = json.loads(product)['image']
                 aList.append(product_lst[i])
-                print("func2")
-                print(product_lst[i].pic)
+                print("s-func2 " + product_lst[i].pic)
+                
                 
             except KeyError:
                 pass
