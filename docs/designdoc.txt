@@ -13,3 +13,13 @@ It is highly likey we are to write different scripts to scrap different sites th
 
 Creation of restful api in python 
 https://www.codementor.io/sagaragarwal94/building-a-basic-restful-api-in-python-58k02xsiq
+
+Python packages: 
+-requests
+-pandas
+-fake_useragent
+-selenium
+-bs4
+-lxml
+-executable chrome.exe in path/to
+-flask
