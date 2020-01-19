@@ -10,8 +10,12 @@ from selenium.webdriver.support import expected_conditions as EC
 import json
 import queue
 import time
+from firebase.firebase import FirebaseApplication
+url = ""
+firebase = FirebaseApplication(url, None)
 
-def scrap_shopee(keyword_search, total_of_result,queue):
+
+def scrap_shopee(keyword_search, total_of_result, queue):
 
     ua = UserAgent()
     userAgent = ua.random
@@ -48,37 +52,42 @@ def scrap_shopee(keyword_search, total_of_result,queue):
         num += 1
 
         product_lst.append(Shopee(item['name'], "$"+str(item['price_min']/100000), str(round(item['item_rating'].get("rating_star"), 2))+"("+str(
-            int(sum(item['item_rating'].get("rating_count"))/2))+")", url+"-i.{}.{}".format(item['shopid'], item['itemid']),""))
-        
+            int(sum(item['item_rating'].get("rating_count"))/2))+")", url+"-i.{}.{}".format(item['shopid'], item['itemid']), ""))
+
         # i wrote these based on the structure of the url by combining the name + shopid + itemid
-        
-        
-       
+
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless') 
-    options.add_argument('start-maximized') 
+    options.add_argument('--headless')
+    options.add_argument('start-maximized')
     options.add_argument('disable-infobars')
     options.add_argument('--disable-extensions')
-    browserdriver = webdriver.Chrome(options = options)
-    
+    browserdriver = webdriver.Chrome(options=options)
+
     for i in range(len(product_lst)):
         browserdriver.get(product_lst[i].url)
         time.sleep(2)
-        products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
-        products_json = [product.get_attribute('innerHTML') for product in products[1:]]
-        
+        products = [item for item in WebDriverWait(browserdriver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
+        products_json = [product.get_attribute(
+            'innerHTML') for product in products[1:]]
+
         for product in products_json:
             try:
                 product_lst[i].pic = json.loads(product)['image']
                 # print(product_lst[i].pic)
             except KeyError:
                 pass
-            
+
     browserdriver.quit()
-        
+
     if len(product_lst) == 0:
         print("Fail")
         sys.exit()
+    # checking if the product has reviews
+    if str(int(sum(item['item_rating'].get("rating_count"))/2)) > 1:
+        firebase.patch("/Products/{}".format(keyword_search),
+                       {"url": url+"-i.{}.{}".format(item['shopid'], item['itemid'])})
+
     queue.put(product_lst)
     return product_lst
 

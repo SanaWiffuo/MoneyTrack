@@ -6,7 +6,7 @@ import queue
 from firebase.firebase import FirebaseApplication
 import requests
 
-url = "https://productify-d0338.firebaseio.com/"
+url = ""
 firebase = FirebaseApplication(url, None)
 app = Flask(__name__, template_folder="templates")
 app.config["DEBUG"] = True
@@ -28,12 +28,11 @@ def login():
         username = request.form['item']
         password = request.form['num']
         users = firebase.get('/users')
-
     return render_template("login.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
-def login():
+def signup():
     if request.method == "POST":
         username = request.form['item']
         password = request.form['num']
