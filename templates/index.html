@@ -22,29 +22,10 @@ head %} {{ super() }} {% endblock %}
         class="form-control form-rounded w-50 mx-auto"
         name="num"
       />
-      <input type="submit" value="Submit" />
+      <button type="submit" value="Search" class="btn btn-primary">
+        <input type="submit" value="Submit" />
+      </button>
     </form>
-    <!-- <form>
-      <div class="form-group" method="post">
-        <label for="exampleInputEmail1">Product Name</label>
-        <input
-          type="text"
-          class="form-control form-rounded w-50 mx-auto"
-          id="exampleInputEmail1"
-          placeholder="Enter Product Name"
-          name="item"
-        />
-        <label for="exampleInputPassword1">Number of products</label>
-        <input
-          type="text"
-          class="form-control form-rounded w-50 mx-auto"
-          id="exampleInputPassword1"
-          placeholder=""
-          name="num"
-        />
-      </div>
-      <button type="submit" value="Search" class="btn btn-primary"></button>
-    </form> -->
   </main>
   {% endblock %}
 </body>
