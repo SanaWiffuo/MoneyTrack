@@ -24,40 +24,41 @@ def scrap_lazada(search_item,total_of_result):
 
     browser = webdriver.Chrome(webdriver_path,options=options)
     browser.get(Lazada_url)
-
+    print(browser.current_url())
     search_bar = browser.find_element_by_id("q")
     search_bar.send_keys(search_item)
     search_bar.submit()
+    print(browser.current_url())
 
     
-    item_titles = browser.find_elements_by_class_name('c16H9d')
-    item_prices = browser.find_elements_by_class_name('c13VH6')
-    links = browser.find_elements_by_xpath("//div[@class='cRjKsc']/a")
+    # item_titles = browser.find_elements_by_class_name('c16H9d')
+    # item_prices = browser.find_elements_by_class_name('c13VH6')
+    # links = browser.find_elements_by_xpath("//div[@class='cRjKsc']/a")
 
-    product_lst = []
+    # product_lst = []
     
-    if len(item_titles)==0:
-        print("Fail")
-        sys.exit()
+    # if len(item_titles)==0:
+    #     print("Fail")
+    #     sys.exit()
 
     
-    for i in range(total_of_result):
-        product_lst.append(Lazada(item_titles[i].text,item_prices[i].text,"",links[i].get_attribute("href"),""))
+    # for i in range(total_of_result):
+    #     product_lst.append(Lazada(item_titles[i].text,item_prices[i].text,"",links[i].get_attribute("href"),""))
         
   
-    for i in range(len(product_lst)):
-        browser.get("{}".format(product_lst[i].url))
-        ratings = browser.find_elements_by_class_name('score-average')
-        ratings_count = browser.find_elements_by_class_name('count')
-        num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
-        product_lst[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-        pic_links = browser.find_elements_by_xpath("//div[@class='gallery-preview-panel__content']/img")
-        product_lst[i].pic = pic_links[0].get_attribute('src')
+    # for i in range(len(product_lst)):
+    #     browser.get("{}".format(product_lst[i].url))
+    #     ratings = browser.find_elements_by_class_name('score-average')
+    #     ratings_count = browser.find_elements_by_class_name('count')
+    #     num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
+    #     product_lst[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
+    #     pic_links = browser.find_elements_by_xpath("//div[@class='gallery-preview-panel__content']/img")
+    #     product_lst[i].pic = pic_links[0].get_attribute('src')
        
 
 
     browser.quit()
-    
+    product_lst = []
     return product_lst
 
 if __name__ == "__main__":
