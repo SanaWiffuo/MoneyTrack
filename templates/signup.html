@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block title %}Track{% endblock %} {% block head %}
+{{ super() }} {% endblock %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/login.css') }}"
+/>
+<body>
+  {% block body %}
+  <div class="container">
+    <h1>Login to your account</h1>
+    <form id="login-form" name="login-form">
+      <div class="form-group">
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          class="input-field"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          class="input-field"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          class="input-field"
+        />
+      </div>
+      <input type="submit" value="SIGN UP" class="login-btn" />
+    </form>
+  </div>
+  {% endblock %}
+</body>

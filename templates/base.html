@@ -1,35 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
+    {% block head %}
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <title>{% block title %}{% endblock %}</title>
     <style>
       .navbar-brand {
-        font-size: 40px;
+        font-size: 36px;
         background: -webkit-linear-gradient(#2ebf91, #8360c3);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+      header {
+        border-bottom: 2px solid black;
+        margin-bottom: 50px;
+      }
     </style>
+    {% endblock %}
   </head>
   <body>
-    <!-- nav -->
     <header class="container">
       <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#">
           Productify
         </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/signup">Sign up</a>
+            </li>
+          </ul>
+        </div>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -41,58 +62,8 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#"
-                >Home <span class="sr-only">(current)</span></a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-          </ul>
-        </div>
       </nav>
     </header>
-    <main class="container">
-      <div class="text-center">
-        <h1>Welcome to Productify</h1>
-        <p>Search for your products</p>
-      </div>
-
-      <form>
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success my-2" type="submit">
-          Search
-        </button>
-      </form>
-    </main>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -109,5 +80,6 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    {% block body %} {% endblock %}
   </body>
 </html>
