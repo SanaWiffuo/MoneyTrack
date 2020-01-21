@@ -13,8 +13,10 @@ def scrap_lazada(search_item,total_of_result,queue):
 
     ua = UserAgent()
     userAgent = ua.random
-    headers = {'User-Agent': userAgent}
-    # print(headers)
+    headers = {
+        'User-Agent': userAgent,
+        'Referer': "https://www.lazada.sg"
+        }
 
     ret = requests.get(my_url,headers=headers)
     page_soup = soup(ret.text, 'lxml')
@@ -24,17 +26,18 @@ def scrap_lazada(search_item,total_of_result,queue):
     results = []
 
     for product in oJson:
-        results.append(Lazada(product['name'],"$"+product['offers']['price'],"Unavailable",product['url'], product['image']))
+        results.append(Lazada(product['name'],"$"+product['offers']['price'],"",product['url'], product['image']))
         if len(results)==total_of_result:
             break
-    webdriver_path= "/usr/local/bin/chromedriver"
+        
+    
     options = webdriver.ChromeOptions()
     options.add_argument('--headless') 
     options.add_argument('start-maximized') 
     options.add_argument('disable-infobars')
     options.add_argument('--disable-extensions')
 
-    browser = webdriver.Chrome(webdriver_path,options=options)
+    browser = webdriver.Chrome(options=options)
 
     for i in range(len(results)):
         browser.get("{}".format(results[i].url))
@@ -47,7 +50,7 @@ def scrap_lazada(search_item,total_of_result,queue):
     queue.put(results)
     return results
     
-    #for ratings   it is damn slow!!!
+   
     
 
 # if __name__ == "__main__":

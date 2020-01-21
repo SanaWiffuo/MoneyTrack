@@ -10,8 +10,78 @@ from selenium.webdriver.support import expected_conditions as EC
 import json
 import queue
 import time
+from threading import Thread
 
-def scrap_shopee(keyword_search, total_of_result,queue):
+#shopee
+def func1(product_lst,queue):
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless') 
+    options.add_argument('start-maximized') 
+    options.add_argument('disable-infobars')
+    options.add_argument('--disable-extensions')
+    browserdriver = webdriver.Chrome(options = options)
+    aList = []
+    
+    if len(product_lst)%2==0:
+        start = int(len(product_lst)/2)
+    else:
+        start = int(len(product_lst)//2)+1
+        
+    for i in range(start):
+        browserdriver.get(product_lst[i].url)
+        time.sleep(2)
+        products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
+        products_json = [product.get_attribute('innerHTML') for product in products[1:]]
+        
+        for product in products_json:
+            try:
+                product_lst[i].pic = json.loads(product)['image']
+                aList.append(product_lst[i])
+                print("s-func1" + product_lst[i].pic)
+                
+                
+            except KeyError:
+                pass
+        
+    browserdriver.quit()
+    queue.put(aList)
+    return product_lst
+
+def func2(product_lst,queue):
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless') 
+    options.add_argument('start-maximized') 
+    options.add_argument('disable-infobars')
+    options.add_argument('--disable-extensions')
+    browserdriver = webdriver.Chrome(options = options)
+    aList = []
+    
+    if len(product_lst)%2==0:
+        start = int(len(product_lst)/2)
+    else:
+        start = int(len(product_lst)//2)+1
+        
+    for i in range(start,len(product_lst)):
+        browserdriver.get(product_lst[i].url)
+        time.sleep(2)
+        products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
+        products_json = [product.get_attribute('innerHTML') for product in products[1:]]
+        
+        for product in products_json:
+            try:
+                product_lst[i].pic = json.loads(product)['image']
+                aList.append(product_lst[i])
+                print("s-func2 " + product_lst[i].pic)
+                
+                
+            except KeyError:
+                pass
+        
+    browserdriver.quit()
+    queue.put(aList)
+    return product_lst
+    
+def scrape(keyword_search, total_of_result):
 
     ua = UserAgent()
     userAgent = ua.random
@@ -52,37 +122,27 @@ def scrap_shopee(keyword_search, total_of_result,queue):
         
         # i wrote these based on the structure of the url by combining the name + shopid + itemid
         
-        
-       
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless') 
-    options.add_argument('start-maximized') 
-    options.add_argument('disable-infobars')
-    options.add_argument('--disable-extensions')
-    browserdriver = webdriver.Chrome(options = options)
     
-    for i in range(len(product_lst)):
-        browserdriver.get(product_lst[i].url)
-        time.sleep(2)
-        products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
-        products_json = [product.get_attribute('innerHTML') for product in products[1:]]
-        
-        for product in products_json:
-            try:
-                product_lst[i].pic = json.loads(product)['image']
-                # print(product_lst[i].pic)
-            except KeyError:
-                pass
-            
-    browserdriver.quit()
-        
-    if len(product_lst) == 0:
-        print("Fail")
-        sys.exit()
-    queue.put(product_lst)
     return product_lst
 
+def scrap_shopee(search_item, total_of_result,queue,over):
+    lst = scrape(search_item, total_of_result)
+    
+    l = Thread(target=func2 ,args=(lst,queue))
+    l.start()
+    s = Thread(target=func1,args=(lst,queue))
+    s.start()
+    
+    result = queue.get()
+    s.join()
+    l.join()
+    result += queue.get()
+    
+    over.put(result)
+    return result
 
 # if __name__ == "__main__":
-#     df = pd.DataFrame([t.__dict__ for t in scrap_shopee("monitor", 5)])
+#     queue = queue.Queue()
+#     result = scrap_shopee("iphone 11 pro",5,queue)    
+#     df = pd.DataFrame([t.__dict__ for t in result])
 #     print(df)
