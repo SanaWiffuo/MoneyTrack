@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
     "liveServer.settings.port": 5501
+=======
+    "python.pythonPath": "/usr/local/bin/python3"
+>>>>>>> 549ba0ad595e38c7e6ecd88681881e5d7637c221
 }
