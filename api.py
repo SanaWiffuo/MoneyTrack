@@ -20,14 +20,32 @@ def home():
     return render_template("index.html")
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['pass']
+        return redirect('/')
+    return render_template("login.html")
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['pass']
+        return redirect('/')
+    return render_template("signup.html")
+
+
 @app.route('/search/<string:item>/<int:num>', methods=['GET'])
 def search(item, num):
     try:
-        l = Thread(target=scrap_lazada ,args=(item,num, l_queue,over))
+        l = Thread(target=scrap_lazada, args=(item, num, l_queue, over))
         l.start()
-        s = Thread(target=scrap_shopee,args=(item, num, s_queue,over))
+        s = Thread(target=scrap_shopee, args=(item, num, s_queue, over))
         s.start()
-        
+
         result = over.get()
         s.join()
         l.join()
