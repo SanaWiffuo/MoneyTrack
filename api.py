@@ -16,7 +16,6 @@ def home():
     if request.method == "POST":
         item = request.form['item']
         return redirect('/search/{}'.format(item))
-
     try:
         return render_template("index.html")
     except Exception:
@@ -29,7 +28,6 @@ def login():
         email = request.form['email']
         password = request.form['pass']
         return redirect('/')
-
     try:
         return render_template("login.html")
     except Exception:
@@ -42,7 +40,10 @@ def signup():
         email = request.form['email']
         password = request.form['pass']
         return redirect('/')
-    return render_template("signup.html")
+    try:
+        return render_template("signup.html")
+    except Exception:
+        return render_template("error.html")
 
 
 @app.route('/search/<string:item>', methods=['GET'])
@@ -61,6 +62,11 @@ def search(item):
         return render_template("results.html", products=result)
     except Exception:
         return render_template("error.html")
+
+
+# @app.route('/track', methods=['GET', 'POST'])
+# def track():
+#     if request.method == "POST":
 
 
 app.run()
