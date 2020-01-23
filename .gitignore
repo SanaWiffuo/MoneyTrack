@@ -14,3 +14,7 @@
 
 # End of https://www.gitignore.io/api/visualstudiocode
 .pyc
+__pycache__/*
+__pycache__/lazada.cpython-36.pyc
+.gitignore
+

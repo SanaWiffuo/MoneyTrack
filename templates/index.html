@@ -1,29 +1,29 @@
-{% extends "base.html" %} {% block title %}Productify{% endblock %} {% block
-head %} {{ super() }} {% endblock %}
+{% extends "base.html" %} {% block title %}Productify{% endblock %} {% block head %} {{ super() }} {% endblock %}
 <!-- <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/home.css') }}"
 /> -->
+
 <body>
-  {% block body %}
-  <main class="container">
-    <h1 class="text-center">Welcome To Productify</h1>
-    <p></p>
-    <div id="cover">
-      <form method="POST" action="">
-        <div class="tb">
-          <div class="td">
-            <input type="text" placeholder="Search" required />
-          </div>
-          <div class="td" id="s-cover">
-            <button type="submit">
+    {% block body %}
+    <main class="container">
+        <h1 class="text-center">Welcome To Productify</h1>
+        <p></p>
+        <div id="cover">
+            <form method="POST" action="">
+                <div class="tb">
+                    <div class="td">
+                        <input name="item" type="text" placeholder="Search" required />
+                    </div>
+                    <div class="td" id="s-cover">
+                        <button type="submit">
               <div id="s-circle"></div>
               <span></span>
             </button>
-          </div>
+                    </div>
+                </div>
+            </form>
         </div>
-      </form>
-    </div>
-  </main>
-  {% endblock %}
+    </main>
+    {% endblock %}
 </body>
