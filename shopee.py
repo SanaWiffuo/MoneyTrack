@@ -22,12 +22,9 @@ def func1(product_lst,queue):
     browserdriver = webdriver.Chrome(options = options)
     aList = []
     
-    if len(product_lst)%2==0:
-        start = int(len(product_lst)/2)
-    else:
-        start = int(len(product_lst)//2)+1
+
         
-    for i in range(start):
+    for i in range(0,5):
         browserdriver.get(product_lst[i].url)
         time.sleep(2)
         products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
@@ -56,12 +53,9 @@ def func2(product_lst,queue):
     browserdriver = webdriver.Chrome(options = options)
     aList = []
     
-    if len(product_lst)%2==0:
-        start = int(len(product_lst)/2)
-    else:
-        start = int(len(product_lst)//2)+1
+    
         
-    for i in range(start,len(product_lst)):
+    for i in range(5,10):
         browserdriver.get(product_lst[i].url)
         time.sleep(2)
         products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
@@ -80,7 +74,69 @@ def func2(product_lst,queue):
     browserdriver.quit()
     queue.put(aList)
     return product_lst
+
+def func3(product_lst,queue):
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless') 
+    options.add_argument('start-maximized') 
+    options.add_argument('disable-infobars')
+    options.add_argument('--disable-extensions')
+    browserdriver = webdriver.Chrome(options = options)
+    aList = []
     
+    
+        
+    for i in range(10,15):
+        browserdriver.get(product_lst[i].url)
+        time.sleep(2)
+        products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
+        products_json = [product.get_attribute('innerHTML') for product in products[1:]]
+        
+        for product in products_json:
+            try:
+                product_lst[i].pic = json.loads(product)['image']
+                aList.append(product_lst[i])
+                print("s-func3 " + product_lst[i].pic)
+                
+                
+            except KeyError:
+                pass
+        
+    browserdriver.quit()
+    queue.put(aList)
+    return product_lst
+
+def func4(product_lst,queue):
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless') 
+    options.add_argument('start-maximized') 
+    options.add_argument('disable-infobars')
+    options.add_argument('--disable-extensions')
+    browserdriver = webdriver.Chrome(options = options)
+    aList = []
+    
+    
+        
+    for i in range(15,20):
+        browserdriver.get(product_lst[i].url)
+        time.sleep(2)
+        products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
+        products_json = [product.get_attribute('innerHTML') for product in products[1:]]
+        
+        for product in products_json:
+            try:
+                product_lst[i].pic = json.loads(product)['image']
+                aList.append(product_lst[i])
+                print("s-func4 " + product_lst[i].pic)
+                
+                
+            except KeyError:
+                pass
+        
+    browserdriver.quit()
+    queue.put(aList)
+    return product_lst
+
 def scrape(keyword_search, total_of_result):
 
     ua = UserAgent()
@@ -128,14 +184,22 @@ def scrape(keyword_search, total_of_result):
 def scrap_shopee(search_item, total_of_result,queue,over):
     lst = scrape(search_item, total_of_result)
     
-    l = Thread(target=func2 ,args=(lst,queue))
-    l.start()
-    s = Thread(target=func1,args=(lst,queue))
-    s.start()
+    s1 = Thread(target=func1 ,args=(lst,queue))
+    s1.start()
+    s2 = Thread(target=func2,args=(lst,queue))
+    s2.start()
+    s3 = Thread(target=func3 ,args=(lst,queue))
+    s3.start()
+    s4 = Thread(target=func4,args=(lst,queue))
+    s4.start()
     
     result = queue.get()
-    s.join()
-    l.join()
+    s1.join()
+    s2.join()
+    result += queue.get()
+    s3.join()
+    result += queue.get()
+    s4.join()
     result += queue.get()
     
     over.put(result)
@@ -143,6 +207,6 @@ def scrap_shopee(search_item, total_of_result,queue,over):
 
 # if __name__ == "__main__":
 #     queue = queue.Queue()
-#     result = scrap_shopee("iphone 11 pro",5,queue)    
+#     result = scrap_shopee("iphone 11 pro",20,queue)    
 #     df = pd.DataFrame([t.__dict__ for t in result])
 #     print(df)
