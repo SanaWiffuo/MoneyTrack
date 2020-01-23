@@ -9,23 +9,25 @@ head %} {{ super() }} {% endblock %}
   <main class="container">
     <h1 class="text-center">Welcome To Productify</h1>
     <p></p>
-    <form method="post">
-      Enter Product name:
-      <input
-        type="text"
-        class="form-control form-rounded w-50 mx-auto"
-        name="item"
-      />
-      Enter number of results:
-      <input
-        type="text"
-        class="form-control form-rounded w-50 mx-auto"
-        name="num"
-      />
-      <button type="submit" value="Search" class="btn btn-primary">
-        <input type="submit" value="Submit" />
-      </button>
-    </form>
+    <div id="cover">
+      <form method="POST" action="">
+        <div class="tb">
+          <div class="td">
+            <input
+              type="text"
+              placeholder="Search for your products"
+              required
+            />
+          </div>
+          <div class="td" id="s-cover">
+            <button type="submit">
+              <div id="s-circle"></div>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </main>
   {% endblock %}
 </body>

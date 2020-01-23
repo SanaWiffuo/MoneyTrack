@@ -15,9 +15,12 @@ over = queue.Queue()
 def home():
     if request.method == "POST":
         item = request.form['item']
-        num = request.form['num']
         return redirect('/search/{}/{}'.format(item, num))
-    return render_template("index.html")
+
+    try:
+        return render_template("index.html")
+    except Exception:
+        return render_template("error.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -26,7 +29,11 @@ def login():
         email = request.form['email']
         password = request.form['pass']
         return redirect('/')
-    return render_template("login.html")
+
+    try:
+        return render_template("login.html")
+    except Exception:
+        return render_template("error.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -39,11 +46,11 @@ def signup():
 
 
 @app.route('/search/<string:item>/<int:num>', methods=['GET'])
-def search(item, num):
+def search(item):
     try:
-        l = Thread(target=scrap_lazada, args=(item, num, l_queue, over))
+        l = Thread(target=scrap_lazada, args=(item, 40, l_queue, over))
         l.start()
-        s = Thread(target=scrap_shopee, args=(item, num, s_queue, over))
+        s = Thread(target=scrap_shopee, args=(item, 40, s_queue, over))
         s.start()
 
         result = over.get()
