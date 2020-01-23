@@ -15,7 +15,7 @@ over = queue.Queue()
 def home():
     if request.method == "POST":
         item = request.form['item']
-        return redirect('/search/{}/{}'.format(item, num))
+        return redirect('/search/{}'.format(item))
 
     try:
         return render_template("index.html")
@@ -45,12 +45,12 @@ def signup():
     return render_template("signup.html")
 
 
-@app.route('/search/<string:item>/<int:num>', methods=['GET'])
+@app.route('/search/<string:item>', methods=['GET'])
 def search(item):
     try:
-        l = Thread(target=scrap_lazada, args=(item, 40, l_queue, over))
+        l = Thread(target=scrap_lazada, args=(item, 20, l_queue, over))
         l.start()
-        s = Thread(target=scrap_shopee, args=(item, 40, s_queue, over))
+        s = Thread(target=scrap_shopee, args=(item, 20, s_queue, over))
         s.start()
 
         result = over.get()
