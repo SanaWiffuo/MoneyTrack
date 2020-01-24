@@ -17,4 +17,4 @@
 __pycache__/*
 __pycache__/lazada.cpython-36.pyc
 .gitignore
-
+.DS_Store
