@@ -8,7 +8,7 @@ l_queue = queue.Queue()
 s_queue = queue.Queue()
 over = queue.Queue()
 search_item = "ps4" #input("Please enter the product name:")
-total_of_result = 20 #int(input("Please enter the number of result:"))
+total_of_result = 10 #int(input("Please enter the number of result:"))
 
 l = Thread(target=scrap_lazada ,args=(search_item, total_of_result,l_queue,over))
 l.start()
