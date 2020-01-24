@@ -32,6 +32,7 @@
                 var platform = `#platform${i}`
                 var price = `#price${i}`
                 var link = `#url${i}`
+                alert("This item has been added to your tracking list.")
                 $.getJSON('/generate', {
                         name: $(name).text(),
                         platform: $(platform).text(),

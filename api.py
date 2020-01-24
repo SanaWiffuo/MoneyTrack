@@ -4,7 +4,7 @@ from lazada import scrap_lazada
 from threading import Thread
 import queue
 from firebase.firebase import FirebaseApplication
-
+from classes import *
 app = Flask(__name__)
 app.config["DEBUG"] = True
 l_queue = queue.Queue()
@@ -43,7 +43,7 @@ def generate():
     url = "https://productify-3f2ab.firebaseio.com/"  
     firebase = FirebaseApplication(url, None)
     result = firebase.post("/zachary",{"name":name,"platform":platform,"product url":p_url,"initial-price":price,"scrape-price":0})
-    return render_template("index.html")
+    return 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
