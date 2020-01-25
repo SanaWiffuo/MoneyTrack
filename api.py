@@ -1,19 +1,36 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,session
 from shopee import scrap_shopee
 from lazada import scrap_lazada
 from threading import Thread
 import queue
 from firebase.firebase import FirebaseApplication
 from classes import *
+
+
 app = Flask(__name__)
+app.secret_key = "ayush" 
 app.config["DEBUG"] = True
 l_queue = queue.Queue()
 s_queue = queue.Queue()
 over = queue.Queue()
+url = "https://productify-3f2ab.firebaseio.com/"
+firebase = FirebaseApplication(url, None)
 
+def verify_user(username,password):
+    result = firebase.get("/users", None)
+    for i in result:
+        if i == username:
+            if result[i]["password"] == password:
+                return True
+    return False
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    try:
+        username = session['username']
+    except Exception:
+        return render_template("index.html") #alert user to log in first 
+        
     if request.method == "POST":
         item = request.form['item']
         return redirect('/search/{}'.format(item))
@@ -26,11 +43,24 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
-        email = request.form['email']
+        username = request.form['username']
         password = request.form['pass']
-        return redirect('/')
+        if verify_user(username, password):
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('home'))
+       
     try:
         return render_template("login.html")
+    except Exception:
+        return render_template("error.html")
+    
+@app.route('/logout')
+def logout():
+    session['logged_in'] = False
+    session.pop('username', None) 
+    try:
+        return redirect(url_for('home'))
     except Exception:
         return render_template("error.html")
 
@@ -40,17 +70,18 @@ def generate():
     platform = request.args['platform']
     p_url = request.args['link']
     price = request.args['price']
-    url = "https://productify-3f2ab.firebaseio.com/"  
-    firebase = FirebaseApplication(url, None)
-    result = firebase.post("/zachary",{"name":name,"platform":platform,"product url":p_url,"initial-price":price,"scrape-price":0})
-    return 
+    username = request.args['username']
+    result = firebase.post("/{}".format(username),{"name":name,"platform":platform[13:],"product url":p_url,"initial-price":price[7:],"scrape-price":0})
+    return "nothing" #i do this because it has to return something
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == "POST":
-        email = request.form['email']
+        username = request.form['username']
         password = request.form['pass']
-        return redirect('/')
+        result = firebase.put("/users",username,{"password":password})
+        print(result)
+        return render_template("index.html")
     try:
         return render_template("signup.html")
     except Exception:
@@ -60,7 +91,9 @@ def signup():
 @app.route('/search/<string:item>', methods=['GET'])
 def search(item):
     try:
+        username = session['username']
         # result = [Shopee("monitor",100,5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d"),Shopee("monitor",100,5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d")]
+        
         l = Thread(target=scrap_lazada, args=(item, 10, l_queue, over))
         l.start()
         s = Thread(target=scrap_shopee, args=(item, 10, s_queue, over))
@@ -70,8 +103,7 @@ def search(item):
         s.join()
         l.join()
         result += over.get()
-        print(result)
-        return render_template("results.html", products=result)
+        return render_template("results.html", products=result,username=username)
     except Exception:
         return render_template("error.html")
 

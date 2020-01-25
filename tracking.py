@@ -59,11 +59,11 @@ if __name__ == "__main__":
         result = firebase.get("/", None)
         for name in result:
             for i in result[name]:
-                if result[name][i]['platform'] == "lazada":
+                if result[name][i]['platform'] == "Lazada":
                     url = result[name][i]['product url']
                     price = lazada(url)
                     firebase.patch("/{}/{}".format(name,i),{"scrape-price":price})
-                elif result[name][i]['platform'] == "shopee":
+                elif result[name][i]['platform'] == "Shopee":
                     url = result[name][i]['product url']
                     price = shopee(url)
                     firebase.patch("/{}/{}".format(name,i),{"scrape-price":price})

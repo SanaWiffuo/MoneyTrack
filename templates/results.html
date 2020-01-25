@@ -10,13 +10,14 @@
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card">
                 <div class="card-body">
+
                     <img class="card-img-top" src="{{product.pic}}" alt="Card image cap" />
                     <h5 class="card-title" id="name{{loop.index}}">{{product.name}}</h5>
                     <h6 class="card-subtitle mb-2 price{{loop.index}}" id="price{{loop.index}}">Price:{{product.price}}</h6>
                     <h6 class="card-subtitle mb-2 text-muted">Ratings:{{product.ratings}}</h6>
+                    <h5 style="display:none" id="user">{{username}}</h5>
                     <p class="card-text" id="platform{{loop.index}}">Scraped from {{product.platform}}</p>
                     <a href=# id=test class="{{loop.index}}"><button class="btn btn-primary m-2" >Track it</button></a>
-
                     <a id="url{{loop.index}}" href="{{product.url}}" target="_blank" class="card-link">Get it</a>
                 </div>
             </div>
@@ -32,12 +33,14 @@
                 var platform = `#platform${i}`
                 var price = `#price${i}`
                 var link = `#url${i}`
+                var user = `#user`
                 alert("This item has been added to your tracking list.")
                 $.getJSON('/generate', {
                         name: $(name).text(),
                         platform: $(platform).text(),
                         link: $(link).attr('href'),
-                        price: $(price).text()
+                        price: $(price).text(),
+                        username: $(user).text()
 
                     },
 
