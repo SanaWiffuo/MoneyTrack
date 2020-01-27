@@ -151,7 +151,7 @@ def scrape(keyword_search, total_of_result):
         keyword_search)
     # print(url)
     r = requests.get(url, headers=headers).json()
-
+    print(r)
     product_lst = []
     num = 0
     for item in r['items']:
@@ -181,7 +181,7 @@ def scrape(keyword_search, total_of_result):
     
     return product_lst
 
-def scrap_shopee(search_item, total_of_result,queue,over):
+def scrap_shopee(search_item, total_of_result,queue):
     lst = scrape(search_item, total_of_result)
     
     s1 = Thread(target=func1 ,args=(lst,queue))
@@ -202,11 +202,11 @@ def scrap_shopee(search_item, total_of_result,queue,over):
     # s4.join()
     # result += queue.get()
     
-    over.put(result)
+    # over.put(result)
     return result
 
-# if __name__ == "__main__":
-#     queue = queue.Queue()
-#     result = scrap_shopee("iphone 11 pro",20,queue)    
-#     df = pd.DataFrame([t.__dict__ for t in result])
-#     print(df)
+if __name__ == "__main__":
+    queue = queue.Queue()
+    result = scrap_shopee("iphone 11 pro",20,queue)    
+    df = pd.DataFrame([t.__dict__ for t in result])
+    print(df)

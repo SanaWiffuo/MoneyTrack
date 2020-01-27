@@ -1,5 +1,9 @@
-from shopee import *
+import requests
+import pandas as pd
+from fake_useragent import UserAgent
+import json
 from classes import Shopee
+import time
 def product_search(keyword_search,total_of_result):
     ua = UserAgent()
     userAgent = ua.random
@@ -12,7 +16,7 @@ def product_search(keyword_search,total_of_result):
         keyword_search,total_of_result)
     print(url)
     r = requests.get(url, headers=headers)
-    print(r.status_code)
+    # print(r.status_code)
     return r.json()
 
 def product_detail(itemid,shopid):
@@ -23,15 +27,14 @@ def product_detail(itemid,shopid):
     }
     url = "https://shopee.sg/api/v2/item/get?itemid={}&shopid={}".format(itemid,shopid)
     r = requests.get(url, headers=headers)
-    print(r.request.headers)
-    print(r.status_code)
+    # print(r.request.headers)
+    # print(r.status_code)
     
     return r.json()
     
-
-if __name__ == "__main__":
+def scrap_shopee(keyword_search, total_of_result):
     product_lst = []
-    products = product_search("monitor",50)
+    products = product_search("monitor 27 inch",total_of_result)
     # print(products)
     for i in range(len(products['items'])):  
         itemid = products['items'][i]['itemid']
@@ -44,7 +47,14 @@ if __name__ == "__main__":
         price = "$" + str(item['item']['price']/100000)
         url = "https://shopee.sg"+"-i.{}.{}".format(shopid,itemid)
         product_lst.append(Shopee(name,price,ratings, url, image))
-    df = pd.DataFrame([t.__dict__ for t in product_lst])
-    print(df)
+    
+    return product_lst
+
+if __name__ == "__main__":
+    while True:
+        product_lst = scrap_shopee("monitor",20)
+        df = pd.DataFrame([t.__dict__ for t in product_lst])
+        print(df)
+        time.sleep(20)
 
         

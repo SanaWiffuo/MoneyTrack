@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for,session
-from shopee import scrap_shopee
-from lazada import scrap_lazada
+from test import scrap_shopee
+from lazada import scrape
 from threading import Thread
 import queue
 from firebase.firebase import FirebaseApplication
-from classes import *
+from classes import Shopee
 
 
 app = Flask(__name__)
@@ -92,17 +92,18 @@ def signup():
 def search(item):
     try:
         username = session['username']
-        # result = [Shopee("monitor",100,5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d"),Shopee("monitor",100,5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d")]
-        
-        l = Thread(target=scrap_lazada, args=(item, 10, l_queue, over))
-        l.start()
-        s = Thread(target=scrap_shopee, args=(item, 10, s_queue, over))
-        s.start()
+        # result = [Shopee("monitor","$100",5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d"),Shopee("monitor","$100",5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d")]
+        result = scrap_shopee(item,20)
+        result += scrape(item,20)
+        # l = Thread(target=scrap_lazada, args=(item, 10, l_queue, over))
+        # l.start()
+        # s = Thread(target=scrap_shopee, args=(item, 10,over))
+        # s.start()
 
-        result = over.get()
-        s.join()
-        l.join()
-        result += over.get()
+        # result = over.get()
+        # # l.join()
+        # s.join()
+        # result += over.get()
         return render_template("results.html", products=result,username=username)
     except Exception:
         return render_template("error.html")
