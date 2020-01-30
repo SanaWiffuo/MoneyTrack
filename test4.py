@@ -1,47 +1,19 @@
-from threading import Thread
-import queue 
-import time
-
-lst = [1,2,3,4,5]
-queue = queue.Queue()
-result = []
-def func1(lst,queue):
-    smtg = []
-    if len(lst)%2==0:
-        start = int(len(lst)/2)
-    else:
-        start = int(len(lst)//2)+1
-        
-    for i in range(start):
-        time.sleep(2)
-        print(i)
-        smtg.append(i)
-    queue.put(smtg)
-    return smtg
-
-def func2(lst,queue):
-    smtg = []
-    if len(lst)%2==0:
-        start = int(len(lst)/2)
-    else:
-        start = int(len(lst)//2)+1
-        
-    for i in range(start,len(lst)):
-        time.sleep(4)
-        print(i)
-        smtg.append(i)
-    queue.put(smtg)
-    return smtg
+from firebase.firebase import FirebaseApplication
+from classes import Track
+import pandas as pd
+url = "https://productify-3f2ab.firebaseio.com/"
+firebase = FirebaseApplication(url, None)
+result = firebase.get("/{}".format("f"), None)
+products = []
+for key in result:
+    p = result[key]
+    last_updated = p['Last-updated']
+    initial_price = p['initial-price']
+    name = p['name']
+    platform = p['platform']
+    url = p['product url']
+    scrape_price = p['scrape-price']
+    products.append(Track(name,initial_price,scrape_price,url,last_updated,platform))
     
-    
-s = Thread(target=func1,args=(lst,queue))
-s.start()
-l = Thread(target=func2 ,args=(lst,queue))
-l.start()
-
-result = queue.get()
-s.join()
-l.join()
-result += queue.get()
-
-print(result)
+df = pd.DataFrame([t.__dict__ for t in products])
+print(df)

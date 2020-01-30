@@ -4,7 +4,7 @@ from lazada import scrape
 from threading import Thread
 import queue
 from firebase.firebase import FirebaseApplication
-from classes import Shopee
+from classes import Shopee,Track
 
 
 app = Flask(__name__)
@@ -71,7 +71,7 @@ def generate():
     p_url = request.args['link']
     price = request.args['price']
     username = request.args['username']
-    result = firebase.post("/{}".format(username),{"name":name,"platform":platform[13:],"product url":p_url,"initial-price":price[7:],"scrape-price":0})
+    result = firebase.post("/{}".format(username),{"name":name,"platform":platform[13:],"product url":p_url,"initial-price":price[7:],"scrape-price":0,"Last-updated":0})
     return "nothing" #i do this because it has to return something
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -112,9 +112,24 @@ def search(item):
         return render_template("error.html")
 
 
-# @app.route('/track', methods=['GET', 'POST'])
-# def track():
-#     if request.method == "POST":
+@app.route('/track')
+def track():
+    result = firebase.get("/{}".format("f"), None)
+    products = []
+    for key in result:
+        p = result[key]
+        last_updated = p['Last-updated']
+        initial_price = p['initial-price']
+        name = p['name']
+        platform = p['platform']
+        url = p['product url']
+        scrape_price = p['scrape-price']
+        products.append(Track(name,initial_price,scrape_price,url,last_updated,platform))
+        
+    return render_template("track.html",products=products)
+            
+    
+    
 
 
 app.run()
