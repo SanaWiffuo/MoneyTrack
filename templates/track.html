@@ -1,33 +1,35 @@
-{% extends "base.html" %} {% block title %}Track{% endblock %} {% block head %}
-{{ super() }} {% endblock %}
+{% extends "base.html" %} {% block title %}Track{% endblock %} {% block head %} {{ super() }} {% endblock %}
+
 <body>
-  {% block body %}
-  <main class="container">
-    <h1 class="text-center">Welcome To Productify</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Last-updated</th>
-          <th scope="col">Initial price</th>
-          <th scope="col">Name</th>
-          <th scope="col">Platform</th>
-          <th scope="col">Product Url</th>
-          <th scope="col">Scrape price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-        <tr>
-          <th scope="row">{{product[0]}}</th>
-          <td>{{product[1]}}</td>
-          <td>{{product[2]}}</td>
-          <td>{{product[3]}}</td>
-          <td>{{product[4]}}</td>
-          <td>{{product[5]}}</td>
-        </tr>
-        {%endfor%}
-      </tbody>
-    </table>
-  </main>
-  {% endblock %}
+    {% block body %}
+    <main class="container">
+        <h1 class="text-center">Tracking</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Last-updated</th>
+                    <th scope="col">Initial price</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Platform</th>
+                    <th scope="col">Product Url</th>
+                    <th scope="col">Scrape price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{product.last_updated}}</td>
+                    <td>{{product.initial_price}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.platform}}</td>
+                    <td>{{product.url}}</td>
+                    <td>{{product.scrape_price}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </main>
+    {% endblock %}
 </body>

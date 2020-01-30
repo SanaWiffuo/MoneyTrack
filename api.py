@@ -93,11 +93,11 @@ def search(item):
     try:
         username = session['username']
         # result = [Shopee("monitor","$100",5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d"),Shopee("monitor","$100",5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d")]
-        result = scrap_shopee(item,20)
-        # try:
-        #     result += scrape(item,20)
-        # except IndexError:
-        #     pass
+        result = scrap_shopee(item,30)
+        try:
+            result += scrape(item,30)
+        except IndexError:
+            pass
         # l = Thread(target=scrap_lazada, args=(item, 10, l_queue, over))
         # l.start()
         # s = Thread(target=scrap_shopee, args=(item, 10,over))
@@ -111,14 +111,6 @@ def search(item):
     except Exception:
         return render_template("error.html")
 
-@app.route('/track', methods=['GET'])
-def track():
-    try:
-        username = session['username']
-        results = firebase.get("/{}".format(username), None)
-        return render_template("track.html", products=result,username=username)
-    except Exception:
-        return render_template("error.html")
 
 @app.route('/track')
 def track():
@@ -133,7 +125,7 @@ def track():
         url = p['product url']
         scrape_price = p['scrape-price']
         products.append(Track(name,initial_price,scrape_price,url,last_updated,platform))
-        
+
     return render_template("track.html",products=products)
             
     
