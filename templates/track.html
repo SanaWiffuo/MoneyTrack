@@ -38,11 +38,13 @@
                 var name = names[i].innerHTML;
                 var initial_price = initial_prices[i].innerHTML * 1;
                 var scrape_price = scrape_prices[i].innerHTML * 1;
-                if (scrape_price < initial_price) {
-                    var diff = initial_price - scrape_price;
-                    alert(`Your product ${name} in the tracking list has became $${diff} cheaper.`);
-                    var product = `product${i*1+1}`;
-                    document.getElementsByClassName(product)[0].style.color = "red";
+                if (scrape_price != 0) {
+                    if (scrape_price < initial_price) {
+                        var diff = initial_price - scrape_price;
+                        alert(`Your product ${name} in the tracking list has became $${diff} cheaper.`);
+                        var product = `product${i*1+1}`;
+                        document.getElementsByClassName(product)[0].style.color = "red";
+                    }
                 }
             }
         </script>
