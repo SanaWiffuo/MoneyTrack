@@ -28,7 +28,6 @@ def verify_user(username,password):
 def home():
     try:
         username = session['username']
-        print(username)
     except Exception:
         return render_template("index.html") #alert user to log in first 
         

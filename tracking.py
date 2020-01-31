@@ -34,7 +34,7 @@ def shopee(url):
     url = "https://shopee.sg/api/v2/item/get?itemid={}&shopid={}".format(itemid,shopid)
     r = requests.get(url, headers=headers).json()
     
-    price = "$" + str(r['item']['price']/100000)
+    price = str(r['item']['price']/100000)
         
     return price
 
@@ -51,7 +51,7 @@ def lazada(url):
     try:
         data = page_soup.select("[type='application/ld+json']")[0]
     except IndexError:
-        return
+        return 0
     price = json.loads(data.text)["offers"]["price"]
     
     return price
@@ -73,6 +73,9 @@ if __name__ == "__main__":
                     url = result[name][i]['product url']
                     print(url)
                     price = lazada(url)
+                    if price == 0:
+                        time.sleep(600)
+                        price = lazada(url)
                     now_utc = datetime.now(timezone('UTC'))
                     now_pacific = now_utc.astimezone(timezone('Singapore'))
                     t = now_pacific.strftime(fmt)

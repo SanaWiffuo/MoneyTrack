@@ -9,27 +9,43 @@
                 <tr>
                     <th scope="col">No</th>
                     <th scope="col">Last-updated</th>
-                    <th scope="col">Initial price</th>
                     <th scope="col">Name</th>
                     <th scope="col">Platform</th>
                     <th scope="col">Product Url</th>
+                    <th scope="col">Initial price</th>
                     <th scope="col">Scrape price</th>
                 </tr>
             </thead>
             <tbody>
                 {% for product in products %}
-                <tr>
+                <tr class="product{{loop.index}}">
                     <th scope="row">{{loop.index}}</th>
                     <td>{{product.last_updated}}</td>
-                    <td>{{product.initial_price}}</td>
-                    <td>{{product.name}}</td>
+                    <td class="name">{{product.name}}</td>
                     <td>{{product.platform}}</td>
-                    <td>{{product.url}}</td>
-                    <td>{{product.scrape_price}}</td>
+                    <td><a style="color:black" href="{{product.url}}" target="_blank">{{product.url}}</a></td>
+                    <td class="initial_price">{{product.initial_price}}</td>
+                    <td class="scrape_price">{{product.scrape_price}}</td>
                 </tr>
                 {%endfor%}
             </tbody>
         </table>
+        <script text="javascript">
+            var names = document.getElementsByClassName("name");
+            var initial_prices = document.getElementsByClassName("initial_price");
+            var scrape_prices = document.getElementsByClassName("scrape_price");
+            for (var i = 0; i < names.length; i++) {
+                var name = names[i].innerHTML;
+                var initial_price = initial_prices[i].innerHTML * 1;
+                var scrape_price = scrape_prices[i].innerHTML * 1;
+                if (scrape_price < initial_price) {
+                    var diff = initial_price - scrape_price;
+                    alert(`Your product ${name} in the tracking list has became $${diff} cheaper.`);
+                    var product = `product${i*1+1}`;
+                    document.getElementsByClassName(product)[0].style.color = "red";
+                }
+            }
+        </script>
     </main>
     {% endblock %}
 </body>
