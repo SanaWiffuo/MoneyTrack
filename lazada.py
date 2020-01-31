@@ -9,54 +9,54 @@ from selenium.webdriver.chrome.options import Options
 import queue
 from threading import Thread
 #lazada
-def func1(results,queue):
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless') 
-    options.add_argument('start-maximized') 
-    options.add_argument('disable-infobars')
-    options.add_argument('--disable-extensions')
-    browser = webdriver.Chrome(options=options)
-    aList = []
+# def func1(results,queue):
+#     options = webdriver.ChromeOptions()
+#     options.add_argument('--headless') 
+#     options.add_argument('start-maximized') 
+#     options.add_argument('disable-infobars')
+#     options.add_argument('--disable-extensions')
+#     browser = webdriver.Chrome(options=options)
+#     aList = []
 
 
-    for i in range(0,5):
-        browser.get("{}".format(results[i].url))
-        ratings = browser.find_elements_by_class_name('score-average')
-        ratings_count = browser.find_elements_by_class_name('count')
-        num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
-        results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-        print("l-func1 " + results[i].ratings)
-        aList.append(results[i])
+#     for i in range(0,5):
+#         browser.get("{}".format(results[i].url))
+#         ratings = browser.find_elements_by_class_name('score-average')
+#         ratings_count = browser.find_elements_by_class_name('count')
+#         num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
+#         results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
+#         print("l-func1 " + results[i].ratings)
+#         aList.append(results[i])
 
         
-    browser.quit()
-    queue.put(aList)
-    return results
+#     browser.quit()
+#     queue.put(aList)
+#     return results
 
-def func2(results,queue):
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless') 
-    options.add_argument('start-maximized') 
-    options.add_argument('disable-infobars')
-    options.add_argument('--disable-extensions')
-    browser = webdriver.Chrome(options=options)
-    aList = []
+# def func2(results,queue):
+#     options = webdriver.ChromeOptions()
+#     options.add_argument('--headless') 
+#     options.add_argument('start-maximized') 
+#     options.add_argument('disable-infobars')
+#     options.add_argument('--disable-extensions')
+#     browser = webdriver.Chrome(options=options)
+#     aList = []
     
 
         
-    for i in range(5,10):
-        browser.get("{}".format(results[i].url))
-        ratings = browser.find_elements_by_class_name('score-average')
-        ratings_count = browser.find_elements_by_class_name('count')
-        num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
-        results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
-        print("l-func2 " + results[i].ratings)
-        aList.append(results[i])
+#     for i in range(5,10):
+#         browser.get("{}".format(results[i].url))
+#         ratings = browser.find_elements_by_class_name('score-average')
+#         ratings_count = browser.find_elements_by_class_name('count')
+#         num_of_ratings = [i for i in ratings_count[0].text if i.isdigit()==True]
+#         results[i].ratings = ratings[0].text+"("+"".join(num_of_ratings)+")"
+#         print("l-func2 " + results[i].ratings)
+#         aList.append(results[i])
        
         
-    browser.quit()
-    queue.put(aList)
-    return results
+#     browser.quit()
+#     queue.put(aList)
+#     return results
 
 
 def scrape(search_item,total_of_result):

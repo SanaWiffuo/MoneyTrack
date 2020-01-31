@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for,session
-from test import scrap_shopee
+from shopee import scrap_shopee
 from lazada import scrape
 from threading import Thread
 import queue
@@ -28,6 +28,7 @@ def verify_user(username,password):
 def home():
     try:
         username = session['username']
+        print(username)
     except Exception:
         return render_template("index.html") #alert user to log in first 
         
@@ -114,7 +115,8 @@ def search(item):
 
 @app.route('/track')
 def track():
-    result = firebase.get("/{}".format("f"), None)
+    username = session['username']
+    result = firebase.get("/{}".format(username), None)
     products = []
     for key in result:
         p = result[key]

@@ -10,6 +10,7 @@ from fake_useragent import UserAgent
 from selenium.webdriver.chrome.options import Options
 from firebase.firebase import FirebaseApplication
 import time
+from datetime import datetime
 
 def shopee(url):
     options = webdriver.ChromeOptions()
@@ -61,18 +62,18 @@ if __name__ == "__main__":
             for i in result[name]:
                 if result[name][i]['platform'] == "Lazada":
                     url = result[name][i]['product url']
+                    print(url)
                     price = lazada(url)
-                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price})
+                    ts = time.time()
+                    st = datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":st})
                 elif result[name][i]['platform'] == "Shopee":
                     url = result[name][i]['product url']
+                    print(url)
                     price = shopee(url)
-                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price})
-            time.sleep(60)
+                    ts = time.time()
+                    st = datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":st})
+                time.sleep(120)
         time.sleep(1800)
             
-
-# result = firebase.post("/zachary",{"name":"Ansmite 24' 75Hz IPS Curved FHD LED Monitor Hdmi HDR Super Slim and Sleek Design","platform":"shopee","product url":
-#     "https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","initial-price":300,"scrape-price":0})
-# result = firebase.post("/hwen",{"name":"AMD Ryzen 7 3700X R7 3700X 3.6 GHz Eight-Core Sinteen-Thread CPU Processor 7NM L3=32M 100-000000071 Socket AM4 new and with fan","platform":"lazada","product url":
-#     "https://www.lazada.sg/products/amd-ryzen-7-3700x-r7-3700x-36-ghz-eight-core-sinteen-thread-cpu-processor-7nm-l332m-100-000000071-socket-am4-new-and-with-fan-i556430870-s1579876774.html?spm=a2o42.searchlist.list.1.6e178e5dnIln3D&search=1"
-#     ,"initial-price":351,"scrape-price":0})
