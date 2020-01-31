@@ -60,7 +60,7 @@ def lazada(url):
 url = "https://productify-3f2ab.firebaseio.com/"  
 
 firebase = FirebaseApplication(url, None)
-
+fmt = "%Y-%m-%d %H:%M:%S"
 if __name__ == "__main__":
     while True:
         result = firebase.get("/", None)
@@ -72,17 +72,19 @@ if __name__ == "__main__":
                     url = result[name][i]['product url']
                     print(url)
                     price = lazada(url)
-                    ts = time.time()
-                    st = datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":st})
+                    now_utc = datetime.now(timezone('UTC'))
+                    now_pacific = now_utc.astimezone(timezone('Singapore'))
+                    time = now_pacific.strftime(fmt)
+                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":time})
                 elif result[name][i]['platform'] == "Shopee":
                     url = result[name][i]['product url']
                     print(url)
                     price = shopee(url)
-                    ts = time.time()
-                    st = datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":st})
-                time.sleep(120)
+                    now_utc = datetime.now(timezone('UTC'))
+                    now_pacific = now_utc.astimezone(timezone('Singapore'))
+                    time = now_pacific.strftime(fmt)
+                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":time})
+                # time.sleep(120)
         print("Finished updating")
         time.sleep(1800)
         
