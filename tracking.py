@@ -6,6 +6,7 @@ from fake_useragent import UserAgent
 from firebase.firebase import FirebaseApplication
 import time
 from datetime import datetime
+from pytz import timezone
 
 def shopee(url):
     itemidlst = []
@@ -74,16 +75,16 @@ if __name__ == "__main__":
                     price = lazada(url)
                     now_utc = datetime.now(timezone('UTC'))
                     now_pacific = now_utc.astimezone(timezone('Singapore'))
-                    time = now_pacific.strftime(fmt)
-                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":time})
+                    t = now_pacific.strftime(fmt)
+                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":t})
                 elif result[name][i]['platform'] == "Shopee":
                     url = result[name][i]['product url']
                     print(url)
                     price = shopee(url)
                     now_utc = datetime.now(timezone('UTC'))
                     now_pacific = now_utc.astimezone(timezone('Singapore'))
-                    time = now_pacific.strftime(fmt)
-                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":time})
+                    t = now_pacific.strftime(fmt)
+                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":t})
                 # time.sleep(120)
         print("Finished updating")
         time.sleep(1800)
