@@ -35,7 +35,7 @@ def home():
         item = request.form['item']
         return redirect('/search/{}'.format(item))
     try:
-        return render_template("index.html")
+        return render_template("index.html",username=username)
     except Exception:
         return render_template("error.html")
 
@@ -120,7 +120,7 @@ def track():
         scrape_price = p['scrape-price']
         products.append(Track(name,initial_price,scrape_price,url,last_updated,platform))
 
-    return render_template("track.html",products=products)
+    return render_template("track.html",products=products,username=username)
             
     
     
