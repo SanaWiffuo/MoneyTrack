@@ -1,13 +1,21 @@
 {% extends "base.html" %} {% block title %}Productify{% endblock %} {% block head %} {{ super() }} {% endblock %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <body>
     {% block body %}
     <div class="container-fluid">
         <h1 class="text-center">Results</h1>
     </div>
+
+    <select class="price-sorting type-regular" name="price-sorting">
+        <option selected disabled>Default</option>
+        <option value="l2h">Low to high</option>
+        <option value="h2l">High to low</option>
+    </select>
+
     <div class="card-deck">
-        {% for product in products %}
-        <div class="col-lg-4 col-md-6 mb-4">
+        {% for product in products%}
+        <div class="col-lg-4 col-md-6 mb-4 product" data-price="{{product.price}}">
             <div class="card">
                 <div class="card-body">
                     <img class="card-img-top" src="{{product.pic}}" alt="Card image cap" />
@@ -23,6 +31,37 @@
         </div>
         {%endfor%}
     </div>
+    <script>
+        $(document).on("change", ".price-sorting", function() {
+
+            var sortingMethod = $(this).val();
+
+            if (sortingMethod == 'l2h') {
+                sortProductsPriceAscending();
+            } else if (sortingMethod == 'h2l') {
+                sortProductsPriceDescending();
+            }
+
+        });
+
+        function sortProductsPriceAscending() {
+            var products = $('.product');
+            products.sort(function(a, b) {
+                return $(a).data("price") - $(b).data("price")
+            });
+            $(".card-deck").html(products);
+
+        }
+
+        function sortProductsPriceDescending() {
+            var products = $('.product');
+            products.sort(function(a, b) {
+                return $(b).data("price") - $(a).data("price")
+            });
+            $(".card-deck").html(products);
+
+        }
+    </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
         $(function() {

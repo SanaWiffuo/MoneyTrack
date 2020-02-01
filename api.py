@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for,session
-from test import scrap_shopee
+from shopee import scrap_shopee
 from lazada import scrape
 from threading import Thread
 import queue
 from firebase.firebase import FirebaseApplication
-from classes import Shopee
+from classes import Shopee,Track
 
 
 app = Flask(__name__)
@@ -35,7 +35,7 @@ def home():
         item = request.form['item']
         return redirect('/search/{}'.format(item))
     try:
-        return render_template("index.html")
+        return render_template("index.html",username=username)
     except Exception:
         return render_template("error.html")
 
@@ -71,7 +71,7 @@ def generate():
     p_url = request.args['link']
     price = request.args['price']
     username = request.args['username']
-    result = firebase.post("/{}".format(username),{"name":name,"platform":platform[13:],"product url":p_url,"initial-price":price[7:],"scrape-price":0})
+    result = firebase.post("/{}".format(username),{"name":name,"platform":platform[13:],"product url":p_url,"initial-price":price[7:],"scrape-price":0,"Last-updated":0})
     return "nothing" #i do this because it has to return something
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -92,37 +92,38 @@ def signup():
 def search(item):
     try:
         username = session['username']
-        # result = [Shopee("monitor","$100",5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d"),Shopee("monitor","$100",5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d")]
-        result = scrap_shopee(item,20)
-        # try:
-        #     result += scrape(item,20)
-        # except IndexError:
-        #     pass
-        # l = Thread(target=scrap_lazada, args=(item, 10, l_queue, over))
-        # l.start()
-        # s = Thread(target=scrap_shopee, args=(item, 10,over))
-        # s.start()
+        # result = [Shopee("ex","100",5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d"),Shopee("ch","50",5.0,"https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","https://cf.shopee.sg/file/b83e20398e1991117b95ba9c81bd8a3d")]
+        result = scrap_shopee(item,30)
+        try:
+            result += scrape(item,30)
+        except IndexError:
+            pass
 
-        # result = over.get()
-        # # l.join()
-        # s.join()
-        # result += over.get()
+
         return render_template("results.html", products=result,username=username)
     except Exception:
         return render_template("error.html")
 
-@app.route('/track', methods=['GET'])
-def track():
-    try:
-        username = session['username']
-        results = firebase.get("/{}".format(username), None)
-        return render_template("track.html", products=result,username=username)
-    except Exception:
-        return render_template("error.html")
 
-# @app.route('/track', methods=['GET', 'POST'])
-# def track():
-#     if request.method == "POST":
+@app.route('/track')
+def track():
+    username = session['username']
+    result = firebase.get("/{}".format(username), None)
+    products = []
+    for key in result:
+        p = result[key]
+        last_updated = p['Last-updated']
+        initial_price = p['initial-price']
+        name = p['name']
+        platform = p['platform']
+        url = p['product url']
+        scrape_price = p['scrape-price']
+        products.append(Track(name,initial_price,scrape_price,url,last_updated,platform))
+
+    return render_template("track.html",products=products,username=username)
+            
+    
+    
 
 
 app.run()

@@ -2,36 +2,41 @@ import requests
 from bs4 import BeautifulSoup as soup
 import json
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from fake_useragent import UserAgent
-from selenium.webdriver.chrome.options import Options
 from firebase.firebase import FirebaseApplication
 import time
+from datetime import datetime
+from pytz import timezone
 
 def shopee(url):
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless') 
-    options.add_argument('start-maximized') 
-    options.add_argument('disable-infobars')
-    options.add_argument('--disable-extensions')
-    browserdriver = webdriver.Chrome(options = options)
-
-    browserdriver.get(url)
-    time.sleep(2)
-    products = [item for item in WebDriverWait(browserdriver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[type="application/ld+json"]')))]
-    products_json = [product.get_attribute('innerHTML') for product in products[1:]]
+    itemidlst = []
+    shopidlst = []
+    check = 0
+    for i in url[::-1]:
+        if i == ".":
+            check += 1
+        if check == 0:
+            if i.isdigit():
+                itemidlst.append(i)
+        elif check == 1:
+            if i.isdigit():
+                shopidlst.append(i)
+    itemidlst.reverse()
+    itemid = "".join(itemidlst)
+    shopidlst.reverse()
+    shopid = "".join(shopidlst)
+  
+    ua = UserAgent()
+    userAgent = ua.random
+    headers = {
+        'User-Agent': userAgent,
+    }
+    url = "https://shopee.sg/api/v2/item/get?itemid={}&shopid={}".format(itemid,shopid)
+    r = requests.get(url, headers=headers).json()
     
-    for product in products_json:
-        try:
-            price = json.loads(product)['offers']['price']
-        except KeyError:
-            pass
-    
+    price = str(r['item']['price']/100000)
+        
     return price
-
 
 def lazada(url):
     ua = UserAgent()
@@ -43,9 +48,12 @@ def lazada(url):
 
     ret = requests.get(url,headers=headers)
     page_soup = soup(ret.text, 'lxml')
-
-    data = page_soup.select("[type='application/ld+json']")[0]
+    try:
+        data = page_soup.select("[type='application/ld+json']")[0]
+    except IndexError:
+        return 0
     price = json.loads(data.text)["offers"]["price"]
+    
     return price
 
 
@@ -53,26 +61,35 @@ def lazada(url):
 url = "https://productify-3f2ab.firebaseio.com/"  
 
 firebase = FirebaseApplication(url, None)
-
+fmt = "%Y-%m-%d %H:%M:%S"
 if __name__ == "__main__":
     while True:
         result = firebase.get("/", None)
         for name in result:
+            if name == "users":
+                continue
             for i in result[name]:
                 if result[name][i]['platform'] == "Lazada":
                     url = result[name][i]['product url']
+                    print(url)
                     price = lazada(url)
-                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price})
+                    if price == 0:
+                        time.sleep(600)
+                        price = lazada(url)
+                    now_utc = datetime.now(timezone('UTC'))
+                    now_pacific = now_utc.astimezone(timezone('Singapore'))
+                    t = now_pacific.strftime(fmt)
+                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":t})
                 elif result[name][i]['platform'] == "Shopee":
                     url = result[name][i]['product url']
+                    print(url)
                     price = shopee(url)
-                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price})
-            time.sleep(60)
+                    now_utc = datetime.now(timezone('UTC'))
+                    now_pacific = now_utc.astimezone(timezone('Singapore'))
+                    t = now_pacific.strftime(fmt)
+                    firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":t})
+                time.sleep(120)
+        print("Finished updating")
         time.sleep(1800)
+        
             
-
-# result = firebase.post("/zachary",{"name":"Ansmite 24' 75Hz IPS Curved FHD LED Monitor Hdmi HDR Super Slim and Sleek Design","platform":"shopee","product url":
-#     "https://shopee.sg/Anmite-24-75Hz-IPS-Curved-FHD-LED-Monitor-Hdmi-HDR-Super-Slim-and-Sleek-Design-i.152295628.2285979907","initial-price":300,"scrape-price":0})
-# result = firebase.post("/hwen",{"name":"AMD Ryzen 7 3700X R7 3700X 3.6 GHz Eight-Core Sinteen-Thread CPU Processor 7NM L3=32M 100-000000071 Socket AM4 new and with fan","platform":"lazada","product url":
-#     "https://www.lazada.sg/products/amd-ryzen-7-3700x-r7-3700x-36-ghz-eight-core-sinteen-thread-cpu-processor-7nm-l332m-100-000000071-socket-am4-new-and-with-fan-i556430870-s1579876774.html?spm=a2o42.searchlist.list.1.6e178e5dnIln3D&search=1"
-#     ,"initial-price":351,"scrape-price":0})
