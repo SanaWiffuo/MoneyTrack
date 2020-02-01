@@ -8,9 +8,6 @@ from classes import Shopee,Track
 app = Flask(__name__)
 app.secret_key = "ayush" 
 app.config["DEBUG"] = True
-l_queue = queue.Queue()
-s_queue = queue.Queue()
-over = queue.Queue()
 url = "https://productify-3f2ab.firebaseio.com/"
 firebase = FirebaseApplication(url, None)
 
@@ -107,6 +104,9 @@ def search(item):
 def track():
     username = session['username']
     result = firebase.get("/{}".format(username), None)
+    print(result)
+    if result is None:
+        return render_template("index.html")
     products = []
     for key in result:
         p = result[key]
