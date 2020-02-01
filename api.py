@@ -75,7 +75,6 @@ def signup():
         username = request.form['username']
         password = request.form['pass']
         result = firebase.put("/users",username,{"password":password})
-        print(result)
         return render_template("index.html")
     try:
         return render_template("signup.html")
@@ -104,9 +103,8 @@ def search(item):
 def track():
     username = session['username']
     result = firebase.get("/{}".format(username), None)
-    print(result)
     if result is None:
-        return render_template("index.html")
+        return redirect(url_for("home"))
     products = []
     for key in result:
         p = result[key]
