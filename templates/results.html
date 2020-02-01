@@ -6,13 +6,18 @@
     <div class="container-fluid">
         <h1 class="text-center">Results</h1>
     </div>
-
-    <select class="price-sorting type-regular" name="price-sorting">
+    <div style="text-align: center;">
+        <span>{{length}} results found.</span>
+        <br>
+        <label>Sort by:</label>
+        <select class="price-sorting type-regular" name="price-sorting">
         <option selected disabled>Default</option>
         <option value="l2h">Low to high</option>
         <option value="h2l">High to low</option>
     </select>
+    </div>
 
+    <p></p>
     <div class="card-deck">
         {% for product in products%}
         <div class="col-lg-4 col-md-6 mb-4 product" data-price="{{product.price}}">
@@ -31,37 +36,6 @@
         </div>
         {%endfor%}
     </div>
-    <script>
-        $(document).on("change", ".price-sorting", function() {
-
-            var sortingMethod = $(this).val();
-
-            if (sortingMethod == 'l2h') {
-                sortProductsPriceAscending();
-            } else if (sortingMethod == 'h2l') {
-                sortProductsPriceDescending();
-            }
-
-        });
-
-        function sortProductsPriceAscending() {
-            var products = $('.product');
-            products.sort(function(a, b) {
-                return $(a).data("price") - $(b).data("price")
-            });
-            $(".card-deck").html(products);
-
-        }
-
-        function sortProductsPriceDescending() {
-            var products = $('.product');
-            products.sort(function(a, b) {
-                return $(b).data("price") - $(a).data("price")
-            });
-            $(".card-deck").html(products);
-
-        }
-    </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
         $(function() {
@@ -90,5 +64,60 @@
             });
         });
     </script>
+
+    <script>
+        $(document).on("change", ".price-sorting", function() {
+            var sortingMethod = $(this).val();
+
+            if (sortingMethod == 'l2h') {
+                sortProductsPriceAscending();
+            } else if (sortingMethod == 'h2l') {
+                sortProductsPriceDescending();
+            }
+
+            $('a#test').bind('click', function() {
+                var i = $(this).attr('class')
+                var name = `#name${i}`
+                var platform = `#platform${i}`
+                var price = `#price${i}`
+                var link = `#url${i}`
+                var user = `#user`
+                alert("This item has been added to your tracking list.")
+                $.getJSON('/generate', {
+                        name: $(name).text(),
+                        platform: $(platform).text(),
+                        link: $(link).attr('href'),
+                        price: $(price).text(),
+                        username: $(user).text()
+
+                    },
+
+                    function(data) {
+
+                        //do nothing
+                    });
+                return false;
+            });
+
+            function sortProductsPriceAscending() {
+                var products = $('.product');
+                products.sort(function(a, b) {
+                    return $(a).data("price") - $(b).data("price")
+                });
+                $(".card-deck").html(products);
+
+            }
+
+            function sortProductsPriceDescending() {
+                var products = $('.product');
+                products.sort(function(a, b) {
+                    return $(b).data("price") - $(a).data("price")
+                });
+                $(".card-deck").html(products);
+
+            }
+        });
+    </script>
+
     {% endblock %}
 </body>

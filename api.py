@@ -71,7 +71,7 @@ def generate():
     p_url = request.args['link']
     price = request.args['price']
     username = request.args['username']
-    result = firebase.post("/{}".format(username),{"name":name,"platform":platform[13:],"product url":p_url,"initial-price":price[7:],"scrape-price":0,"Last-updated":0})
+    result = firebase.post("/{}".format(username),{"name":name,"platform":platform[13:],"product url":p_url,"initial-price":price[6:],"scrape-price":0,"Last-updated":0})
     return "nothing" #i do this because it has to return something
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -100,7 +100,7 @@ def search(item):
             pass
 
 
-        return render_template("results.html", products=result,username=username)
+        return render_template("results.html", products=result,username=username,length=len(result))
     except Exception:
         return render_template("error.html")
 
