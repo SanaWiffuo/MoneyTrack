@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for,session
+from flask import Flask, render_template, request, redirect, url_for,session,flash
 from shopee import scrap_shopee
 from lazada import scrape
 from firebase.firebase import FirebaseApplication
@@ -24,7 +24,8 @@ def home():
     try:
         username = session['username']
     except Exception:
-        return render_template("index.html") #alert user to log in first 
+        flash("You must log in first!")
+        return render_template("index.html") 
         
     if request.method == "POST":
         item = request.form['item']
@@ -44,6 +45,9 @@ def login():
             session['logged_in'] = True
             session['username'] = username
             return redirect(url_for('home'))
+        else:
+            flash("You entered an invalid username or password.")
+            return render_template("login.html")
        
     try:
         return render_template("login.html")
@@ -104,7 +108,8 @@ def track():
     username = session['username']
     result = firebase.get("/{}".format(username), None)
     if result is None:
-        return redirect(url_for("home"))
+        flash("Your tracking list is empty.")
+        return render_template("track.html")
     products = []
     for key in result:
         p = result[key]
@@ -120,6 +125,5 @@ def track():
             
     
     
-
-
-app.run()
+if __name__ == "__main__":
+    app.run()

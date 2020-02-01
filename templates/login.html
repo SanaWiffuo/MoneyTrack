@@ -53,6 +53,9 @@
                         <button class="login100-form-btn" type="submit">
                 Log in
               </button>
+                        <p></p>{% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+                        <h3 style="color:red" class="text-center">{{ message }}</h3>
+                        {% endfor %} {% endif %} {% endwith %}
                     </div>
 
                 </form>
