@@ -15,9 +15,8 @@ def product_search(keyword_search,total_of_result):
     }
     url = 'https://shopee.sg/api/v2/search_items/?by=relevancy&keyword={}&limit={}&newest=0&order=desc&page_type=search&version=2'.format(
         keyword_search,total_of_result)
-    # print(url)
     r = requests.get(url, headers=headers)
-    # print(r.status_code)
+    
     return r.json()
 
 def product_detail(itemid,shopid):
@@ -28,15 +27,12 @@ def product_detail(itemid,shopid):
     }
     url = "https://shopee.sg/api/v2/item/get?itemid={}&shopid={}".format(itemid,shopid)
     r = requests.get(url, headers=headers)
-    # print(r.request.headers)
-    # print(r.status_code)
     
     return r.json()
     
 def scrap_shopee(keyword_search, total_of_result):
     product_lst = []
     products = product_search(keyword_search,total_of_result)
-    # print(products)
     for i in range(len(products['items'])):  
         itemid = products['items'][i]['itemid']
         shopid = products['items'][i]['shopid']

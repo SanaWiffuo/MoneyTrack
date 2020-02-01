@@ -17,13 +17,13 @@ Firebase
 Use the package manager pip to install the following python dependencies.
 
 ```bash
-pip install -r setup.txt
+pip3 install -r setup.txt
 ```
 
 ## Usage
 
 ```bash
-python api.py
+python3 api.py
 ```
 
 This will open up website
