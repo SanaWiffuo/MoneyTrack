@@ -76,7 +76,7 @@ def scrape(search_item,total_of_result):
     results = []
 
     for product in oJson:
-        results.append(Lazada(product['name'],"$"+product['offers']['price'],"",product['url'], product['image']))
+        results.append(Lazada(product['name'],product['offers']['price'],"",product['url'], product['image']))
         if len(results)==total_of_result:
             break
     df = pd.DataFrame([t.__dict__ for t in results])

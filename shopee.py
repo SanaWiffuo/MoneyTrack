@@ -45,7 +45,7 @@ def scrap_shopee(keyword_search, total_of_result):
         name = item['item']['name']
         ratings = str(round(item['item']['item_rating'].get("rating_star"), 2))+"("+str(
             int(sum(item['item']['item_rating'].get("rating_count"))/2))+")"
-        price = "$" + str(item['item']['price']/100000)
+        price = item['item']['price']/100000
         url = "https://shopee.sg/"
         for i in name:
             if i.isalpha() == True:
