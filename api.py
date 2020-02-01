@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for,session
 from shopee import scrap_shopee
 from lazada import scrape
-from threading import Thread
 import queue
 from firebase.firebase import FirebaseApplication
 from classes import Shopee,Track

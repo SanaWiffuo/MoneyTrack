@@ -88,7 +88,7 @@ if __name__ == "__main__":
                     now_pacific = now_utc.astimezone(timezone('Singapore'))
                     t = now_pacific.strftime(fmt)
                     firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":t})
-                time.sleep(120)
+                # time.sleep(120)
         print("Finished updating")
         time.sleep(1800)
         
