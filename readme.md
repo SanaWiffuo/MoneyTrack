@@ -25,3 +25,5 @@ pip install -r setup.txt
 ```bash
 python api.py
 ```
+
+This will open up website
