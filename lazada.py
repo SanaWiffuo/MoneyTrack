@@ -25,8 +25,6 @@ def scrape(search_item,total_of_result):
         results.append(Lazada(product['name'],product['offers']['price'],"Unavailable",product['url'], product['image']))
         if len(results)==total_of_result:
             break
-    df = pd.DataFrame([t.__dict__ for t in results])
-    print(df)
     return results
 
 if __name__ == "__main__":
