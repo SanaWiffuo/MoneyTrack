@@ -1,10 +1,9 @@
 from lazada import scrape
 from shopee import scrap_shopee
 import pandas as pd
-from threading import Thread
-import queue 
 
 keyword = input("Please enter the keyword to search: ")
+
 result = scrap_shopee(keyword,30)
 try:
     result += scrape(keyword,30)
