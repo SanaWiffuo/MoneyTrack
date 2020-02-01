@@ -35,7 +35,7 @@ def product_detail(itemid,shopid):
     
 def scrap_shopee(keyword_search, total_of_result):
     product_lst = []
-    products = product_search("monitor 27 inch",total_of_result)
+    products = product_search(keyword_search,total_of_result)
     # print(products)
     for i in range(len(products['items'])):  
         itemid = products['items'][i]['itemid']
