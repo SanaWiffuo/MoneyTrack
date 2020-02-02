@@ -18,10 +18,6 @@ Productify empowers users to track products from websites like Shoppe and Lazada
 
 ```bash
 .
-├── __pycache__
-│   ├── classes.cpython-36.pyc
-│   ├── lazada.cpython-36.pyc
-│   └── shopee.cpython-36.pyc
 ├── api.py
 ├── classes.py
 ├── lazada.py
@@ -58,7 +54,7 @@ Our project is ran in the console , preferably a [bash](<https://en.wikipedia.or
 
 ### Scraping
 
-In out project, we do scraping from shopee and lazada.
+In our project, we do scraping from shopee and lazada.
 
 For shopee, we requests the shopee api to scrape the relevant information for the products.
 
@@ -70,7 +66,6 @@ As Productify retrieve products from two websites , Shoppe and Lazada.
 
 Scraping for these websites requires 2 python scripts.
 
-To avoid the server from getting captcha, we are using fake_useragent to rotate the user agent whenever we making web requests.
 
 #### Shopee Script
 
