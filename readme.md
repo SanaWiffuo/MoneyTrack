@@ -50,7 +50,7 @@ api.py is the Flask file
 
 .html files can be found in templates folder
 
-.css and .js files can be found in css folder located in the static folder
+.css files can be found in css folder located in the static folder
 
 ## How It Works
 
