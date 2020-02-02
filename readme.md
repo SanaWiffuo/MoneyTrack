@@ -117,7 +117,7 @@ Scraping for these websites requires 2 python scripts.
 
 To avoid the server from getting captcha, we are using fake_useragent to rotate the user agent whenever we making web requests.
 
-#### Shoppe Script
+#### Shopee Script
 
 The script uses the shoppe api to retrieve products information. The script sends a http get request to Shoppe api , the api replies with a JSON object . The script converts the JSON into an object called Shoppe.
 
