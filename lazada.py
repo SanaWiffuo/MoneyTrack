@@ -17,7 +17,10 @@ def scrape(search_item,total_of_result):
 
     ret = requests.get(my_url,headers=headers)
     page_soup = soup(ret.text, 'lxml')
-    data = page_soup.select("[type='application/ld+json']")[1]
+    try:
+        data = page_soup.select("[type='application/ld+json']")[1]
+    except IndexError:
+        return []
     oJson = json.loads(data.text)["itemListElement"]
     results = []
 
