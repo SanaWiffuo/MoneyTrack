@@ -96,13 +96,18 @@ Productify empowers users to track products from websites like Shoppe and Lazada
 
 ```
 
-api.py is the Flask file. .html files can be found in templates folder and .css and .js files can be found in css folder located in the static folder.
+api.py is the Flask file
+
+.html files can be found in templates folder
+
+.css and .js files can be found in css folder located in the static folder
 
 ## How It Works
 
-Our project can be run on the console , preferably a [bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>) shell.
+Our project is ran in the console , preferably a [bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>) shell.
 
 ### Scraping
+
 In out project, we do scraping from shopee and lazada.
 
 For shopee, we requests the shopee api to scrape the relevant information for the products.
@@ -147,7 +152,7 @@ In order , to use Productify one needs to sign up as an user . As a user , one i
 
 Productify is written in Python 3.6 . (Please ensure you have Python 3.6 installed)
 
-[Python 3.6 Download here](https://www.python.org/downloads/release/python-360/)
+Download Python 3.6 [here](https://www.python.org/downloads/release/python-360/)
 
 It is recommended that you create a virtual environment with python 3.6
 
