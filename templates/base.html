@@ -1,209 +1,235 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     {% block head %}
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
     <title>{% block title %}{% endblock %}</title>
     <style>
-        .navbar-brand {
-            font-size: 48px;
-            background: -webkit-linear-gradient(#2ebf91, #8360c3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        header {
-            margin-bottom: 100px;
-        }
-        
-        * {
-            outline: none;
-        }
-        
-        .tb {
-            display: table;
-            width: 100%;
-        }
-        
-        .td {
-            display: table-cell;
-            vertical-align: middle;
-        }
-        
-        input,
-        button {
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-            padding: 0;
-            margin: 0;
-            border: 0;
-            background-color: transparent;
-        }
-        
-        #cover {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            width: 550px;
-            padding: 35px;
-            margin: -83px auto 0;
-            background-color: #ff7575;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px #ff7c7c, 0 0 0 20px #ffffffeb;
-            transform: scale(0.6);
-        }
-        
-        form {
-            height: 96px;
-        }
-        
-        input[type="text"] {
-            width: 100%;
-            height: 96px;
-            font-size: 60px;
-            line-height: 1;
-        }
-        
-        input[type="text"]::placeholder {
-            color: #e16868;
-        }
-        
-        #s-cover {
-            width: 1px;
-            padding-left: 35px;
-        }
-        
-        button {
-            position: relative;
-            display: block;
-            width: 84px;
-            height: 96px;
-            cursor: pointer;
-        }
-        
-        #s-circle {
-            position: relative;
-            top: -8px;
-            left: 0;
-            width: 43px;
-            height: 43px;
-            margin-top: 0;
-            border-width: 15px;
-            border: 15px solid #fff;
-            background-color: transparent;
-            border-radius: 50%;
-            transition: 0.5s ease all;
-        }
-        
-        button span {
-            position: absolute;
-            top: 68px;
-            left: 43px;
-            display: block;
-            width: 45px;
-            height: 15px;
-            background-color: transparent;
-            border-radius: 10px;
-            transform: rotateZ(52deg);
-            transition: 0.5s ease all;
-        }
-        
-        button span:before,
-        button span:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 45px;
-            height: 15px;
-            background-color: #fff;
-            border-radius: 10px;
-            transform: rotateZ(0);
-            transition: 0.5s ease all;
-        }
-        
-        #s-cover:hover #s-circle {
-            top: -1px;
-            width: 67px;
-            height: 15px;
-            border-width: 0;
-            background-color: #fff;
-            border-radius: 20px;
-        }
-        
-        #s-cover:hover span {
-            top: 50%;
-            left: 56px;
-            width: 25px;
-            margin-top: -9px;
-            transform: rotateZ(0);
-        }
-        
-        #s-cover:hover button span:before {
-            bottom: 11px;
-            transform: rotateZ(52deg);
-        }
-        
-        #s-cover:hover button span:after {
-            bottom: -11px;
-            transform: rotateZ(-52deg);
-        }
-        
-        #s-cover:hover button span:before,
-        #s-cover:hover button span:after {
-            right: -6px;
-            width: 40px;
-            background-color: #fff;
-        }
+      .navbar-brand {
+        font-size: 48px;
+        background: -webkit-linear-gradient(#2ebf91, #8360c3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      header {
+        margin-bottom: 100px;
+      }
+
+      * {
+        outline: none;
+      }
+
+      .tb {
+        display: table;
+        width: 100%;
+      }
+
+      .td {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      input,
+      button {
+        color: #fff;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background-color: transparent;
+      }
+
+      #cover {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        width: 550px;
+        padding: 35px;
+        margin: -83px auto 0;
+        background-color: #ff7575;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px #ff7c7c, 0 0 0 20px #ffffffeb;
+        transform: scale(0.6);
+      }
+
+      form {
+        height: 96px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        height: 96px;
+        font-size: 60px;
+        line-height: 1;
+      }
+
+      input[type="text"]::placeholder {
+        color: #e16868;
+      }
+
+      #s-cover {
+        width: 1px;
+        padding-left: 35px;
+      }
+
+      button {
+        position: relative;
+        display: block;
+        width: 84px;
+        height: 96px;
+        cursor: pointer;
+      }
+
+      #s-circle {
+        position: relative;
+        top: -8px;
+        left: 0;
+        width: 43px;
+        height: 43px;
+        margin-top: 0;
+        border-width: 15px;
+        border: 15px solid #fff;
+        background-color: transparent;
+        border-radius: 50%;
+        transition: 0.5s ease all;
+      }
+
+      button span {
+        position: absolute;
+        top: 68px;
+        left: 43px;
+        display: block;
+        width: 45px;
+        height: 15px;
+        background-color: transparent;
+        border-radius: 10px;
+        transform: rotateZ(52deg);
+        transition: 0.5s ease all;
+      }
+
+      button span:before,
+      button span:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 45px;
+        height: 15px;
+        background-color: #fff;
+        border-radius: 10px;
+        transform: rotateZ(0);
+        transition: 0.5s ease all;
+      }
+
+      #s-cover:hover #s-circle {
+        top: -1px;
+        width: 67px;
+        height: 15px;
+        border-width: 0;
+        background-color: #fff;
+        border-radius: 20px;
+      }
+
+      #s-cover:hover span {
+        top: 50%;
+        left: 56px;
+        width: 25px;
+        margin-top: -9px;
+        transform: rotateZ(0);
+      }
+
+      #s-cover:hover button span:before {
+        bottom: 11px;
+        transform: rotateZ(52deg);
+      }
+
+      #s-cover:hover button span:after {
+        bottom: -11px;
+        transform: rotateZ(-52deg);
+      }
+
+      #s-cover:hover button span:before,
+      #s-cover:hover button span:after {
+        right: -6px;
+        width: 40px;
+        background-color: #fff;
+      }
     </style>
     {% endblock %}
-</head>
+  </head>
 
-<body>
+  <body>
     <header class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="/">Productify</a>
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="/">Productify</a>
 
-            </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            {% if session['logged_in'] %}
+            <li class="nav-item active">
+              <a style="color: #ff2e55;" class="nav-link">{{username}}</a>
+            </li>
+            <li class="nav-item active">
+              <a style="color:#007aff;" href="/track" class="nav-link"
+                >Tracking</a
+              >
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/signup">Sign up</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    {% if session['logged_in'] %}
-                    <li class="nav-item active">
-                        <a style="color: #ff2e55;" class="nav-link">{{username}}</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a style="color:#007aff;" href="/track" class="nav-link">Tracking</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/signup">Sign up</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
-        </nav>
+      </nav>
     </header>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
     {% block body %} {% endblock %}
-</body>
-
+  </body>
 </html>

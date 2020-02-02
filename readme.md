@@ -1,6 +1,6 @@
 # Productify
 
-Productify helps track products from websites like Shoppe and Lazada.
+Productify empowers users to track products from websites like Shoppe and Lazada. Helping users to get information about their desired products through one website. Users are able to search for their desired products on Productify , add the product that they wish to have tracked . Productify will handle the rest!
 
 ## Built With
 
@@ -14,13 +14,113 @@ Productify helps track products from websites like Shoppe and Lazada.
 - [Firebase](https://firebase.google.com/products) - Used for storage of products and users information
 - [pytz](https://pypi.org/project/pytz/) - Used for formatting timezone
 
+## Folder structure
+
+```bash
+.
+├── api.py
+├── classes.py
+├── lazada.py
+├── main.py
+├── readme.md
+├── setup.txt
+├── shopee.py
+├── static
+│   └── css
+│       ├── js
+│       │   ├── main.js
+│       │   └── map-custom.js
+│       ├── main.css
+│       ├── util.css
+│       └── vendor
+│           ├── animate
+│           │   └── animate.css
+│           ├── animsition
+│           │   ├── css
+│           │   │   ├── animsition.css
+│           │   │   └── animsition.min.css
+│           │   └── js
+│           │       ├── animsition.js
+│           │       └── animsition.min.js
+│           ├── bootstrap
+│           │   ├── css
+│           │   │   ├── bootstrap-grid.css
+│           │   │   ├── bootstrap-grid.css.map
+│           │   │   ├── bootstrap-grid.min.css
+│           │   │   ├── bootstrap-grid.min.css.map
+│           │   │   ├── bootstrap-reboot.css
+│           │   │   ├── bootstrap-reboot.css.map
+│           │   │   ├── bootstrap-reboot.min.css
+│           │   │   ├── bootstrap-reboot.min.css.map
+│           │   │   ├── bootstrap.css
+│           │   │   ├── bootstrap.css.map
+│           │   │   ├── bootstrap.min.css
+│           │   │   └── bootstrap.min.css.map
+│           │   └── js
+│           │       ├── bootstrap.js
+│           │       ├── bootstrap.min.js
+│           │       ├── popper.js
+│           │       ├── popper.min.js
+│           │       └── tooltip.js
+│           ├── countdowntime
+│           │   └── countdowntime.js
+│           ├── css-hamburgers
+│           │   ├── hamburgers.css
+│           │   └── hamburgers.min.css
+│           ├── daterangepicker
+│           │   ├── daterangepicker.css
+│           │   ├── daterangepicker.js
+│           │   ├── moment.js
+│           │   └── moment.min.js
+│           ├── jquery
+│           │   └── jquery-3.2.1.min.js
+│           ├── perfect-scrollbar
+│           │   ├── perfect-scrollbar.css
+│           │   └── perfect-scrollbar.min.js
+│           └── select2
+│               ├── select2.css
+│               ├── select2.js
+│               ├── select2.min.css
+│               └── select2.min.js
+├── templates
+│   ├── base.html
+│   ├── error.html
+│   ├── index.html
+│   ├── login.html
+│   ├── navbar.html
+│   ├── results.html
+│   ├── signup.html
+│   └── track.html
+└── tracking.py
+
+
+```
+
+api.py is the Flask file. .html files can be found in templates folder and .css and .js files can be found in css folder located in the static folder.
+
 ## How It Works
 
 Our project can be run on the console , preferably a [bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>) shell.
 
 ### Scraping
 
+As Productify retrieve products from two websites , Shoppe and Lazada.
+
+Scraping for these websites requires 2 python scripts.
+
+To avoid the server from getting captcha, we are using fake_useragent to rotate the user agent whenever we making web requests.
+
+#### Shoppe Script
+
+The script uses the shoppe api to retrieve products information. The script sends a http get request to Shoppe api , the api replies with a JSON object . The script converts the JSON into an object called Shoppe.
+
+#### Lazada Script
+
+The script uses the bs4 and requests to retrieve products information. The script sends a http request to lazada website and bs4 parses the html reply with lxml paser. The script converts parsed content into an object called Lazada.
+
 ### Tracking
+
+We enable a function called tracking in our webpage. You can just simply click on the tracking button on the product's card. Our server will be constantly tracking the product and updating the product's price. You can monitor all them in the tracking page. Plus, you will be notified when the price of any product you track becomes lower.
 
 ### Webserver
 
@@ -30,7 +130,9 @@ Websites are build with Html , Css , Bootstrap and Javascript. It is compiled by
 
 Flask is used for backend programming of the website , for example routing of web pages. Each webpage has its speceifc function.
 
-api.py is the Flask file. .html files can be found in templates folder and .css and .js files can be found in css folder located in the static folder.
+Using firebase to store information about the user and tracked products information.Websites are able to dynamically change depending on the information retrieved from firebase.
+
+In order , to use Productify one needs to sign up as an user . As a user , one is able to have access to searching for products and tracking your products.
 
 ## Getting Started
 
@@ -44,11 +146,9 @@ It recommend that you create a virtual environment with python 3.6
 
 ### Installing
 
-Use the package manager pip to install the following python libraries.
-
-(Please ensure you are in the project folder)
-
 ```bash
+git clone https://github.com/ZazzyDictionary/Productify.git
+cd Productify
 pip3 install -r setup.txt
 ```
 
