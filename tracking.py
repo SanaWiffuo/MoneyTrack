@@ -64,6 +64,7 @@ firebase = FirebaseApplication(url, None)
 fmt = "%Y-%m-%d %H:%M:%S"
 if __name__ == "__main__":
     while True:
+        # constantly scraping the results and posting them to firebase
         result = firebase.get("/", None)
         for name in result:
             if name == "users":

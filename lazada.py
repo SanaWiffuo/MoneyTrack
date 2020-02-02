@@ -5,7 +5,9 @@ import json
 import pandas as pd
 from fake_useragent import UserAgent
 
-def scrape(search_item,total_of_result):
+# Using requests and bs4 to parse the html into json and store them in the lazada class
+
+def scrap_lazada(search_item,total_of_result):
     my_url = "https://www.lazada.sg/catalog/?q={}".format(search_item)
 
     ua = UserAgent()
@@ -31,6 +33,6 @@ def scrape(search_item,total_of_result):
     return results
 
 if __name__ == "__main__":
-    lst = scrape("monitor",20)
+    lst = scrap_lazada("monitor",20)
     df = pd.DataFrame([t.__dict__ for t in lst])
     print(df)

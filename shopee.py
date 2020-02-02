@@ -1,13 +1,13 @@
 import requests
 import pandas as pd
-from fake_useragent import UserAgent
+from fake_useragent import UserAgent #rotating the user agent
 import json
 from classes import Shopee
 
 
 def product_search(keyword_search,total_of_result):
     ua = UserAgent()
-    userAgent = ua.random
+    userAgent = ua.random 
     Shopee_url = 'https://shopee.sg'
     headers = {
         'User-Agent': userAgent,
@@ -31,6 +31,7 @@ def product_detail(itemid,shopid):
     return r.json()
     
 def scrap_shopee(keyword_search, total_of_result):
+    # using shopee api to scrape the products and store them in the shopee class
     product_lst = []
     products = product_search(keyword_search,total_of_result)
     for i in range(len(products['items'])):  
@@ -58,10 +59,9 @@ def scrap_shopee(keyword_search, total_of_result):
     return product_lst
 
 if __name__ == "__main__":
-    while True:
-        product_lst = scrap_shopee("monitor",20)
-        df = pd.DataFrame([t.__dict__ for t in product_lst])
-        print(df)
+    product_lst = scrap_shopee("monitor",20)
+    df = pd.DataFrame([t.__dict__ for t in product_lst])
+    print(df)
 
 
         

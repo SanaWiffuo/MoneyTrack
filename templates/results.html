@@ -38,6 +38,7 @@
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
+        // Using ajax to send the product information back to the flask for posting to firebase
         $(function() {
             $('a#test').bind('click', function() {
                 var i = $(this).attr('class')
@@ -66,6 +67,7 @@
     </script>
 
     <script>
+        // Using jquery to sort the products based one price
         $(document).on("change", ".price-sorting", function() {
             var sortingMethod = $(this).val();
 
