@@ -17,3 +17,32 @@ python-firebase
 
 ################################ Formatting timezone #################################
 pytz
+
+beautifulsoup4==4.8.2
+bs4==0.0.1
+certifi==2019.11.28
+cffi==1.13.2
+chardet==3.0.4
+Click==7.0
+cryptography==2.8
+fake-useragent==0.1.11
+firebase==3.0.1
+Flask==1.1.1
+idna==2.8
+itsdangerous==1.1.0
+Jinja2==2.10.3
+jwcrypto==0.6.0
+MarkupSafe==1.1.1
+numpy==1.18.1
+pandas==0.25.3
+pycparser==2.19
+python-dateutil==2.8.1
+python-firebase==1.2
+python-jwt==3.2.5
+pytz==2019.3
+requests==2.22.0
+selenium==3.141.0
+six==1.14.0
+soupsieve==1.9.5
+urllib3==1.25.8
+Werkzeug==0.16.0
