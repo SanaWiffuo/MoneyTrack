@@ -19,8 +19,17 @@ Productify helps track products from websites like Shoppe and Lazada.
 Our project can be run on the console , preferably a [bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>) shell.
 
 ### Scraping
+In out project, we do scraping from shopee and lazada.
+
+For shopee, we requests the shopee api to scrape the relevant information for the products.
+
+For lazada, we requests the lazada webpage and parse the web elements into json and then retrieve the product details from there.
+
+To avoid the server from getting captcha, we are using fake_useragent to rotate the user agent whenever we making web requests.
 
 ### Tracking
+
+We enable a function called tracking in our webpage. You can just simply click on the tracking button on the product's card. Our server will be constantly tracking the product and updating the product's price. You can monitor all them in the tracking page. Plus, you will be notified when the price of any product you track becomes lower.
 
 ### Webserver
 
@@ -38,9 +47,9 @@ api.py is the Flask file. .html files can be found in templates folder and .css 
 
 Productify is written in Python 3.6 . (Please ensure you have Python 3.6 installed)
 
-[Download here](https://www.python.org/downloads/release/python-360/)
+[Python 3.6 Download here](https://www.python.org/downloads/release/python-360/)
 
-It recommend that you create a virtual environment with python 3.6
+It is recommended that you create a virtual environment with python 3.6
 
 ### Installing
 
@@ -60,6 +69,6 @@ python3 api.py
 
 ## Authors
 
-- **Haoman**
+- **Houman**
 
 - **Zachary**
