@@ -4,17 +4,19 @@ Productify helps track products from websites like Shoppe and Lazada.
 
 ## Built With
 
-- [Flask](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-- [Bootstrap](https://maven.apache.org/) - Used for styling of websites
-- [requests](https://rometools.github.io/rome/) - Used to send http requests
-- [bs4](http://www.dropwizard.io/1.0.2/docs/) - Used for scraping
-- [fake_useragent](http://www.dropwizard.io/1.0.2/docs/) - Used for masking ip
-- [lxml](http://www.dropwizard.io/1.0.2/docs/) - Parser used for receive html pages
-- [Pandas](http://www.dropwizard.io/1.0.2/docs/) - Used for data visualization
-- [Firebase](http://www.dropwizard.io/1.0.2/docs/) - Used for storage of products and users information
-- [pytz](http://www.dropwizard.io/1.0.2/docs/) - Used for formatting timezone
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/) - The web framework used
+- [Bootstrap](https://getbootstrap.com/docs/4.4/getting-started/introduction/) - Used for styling of websites
+- [requests](https://pypi.org/project/requests/) - Used to send http requests
+- [bs4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - Used for scraping
+- [fake_useragent](https://pypi.org/project/fake-useragent/) - Used for chnaging browser user agents
+- [lxml](https://lxml.de/) - Parser used for receive html pages
+- [Pandas](https://pandas.pydata.org/) - Used for data visualization
+- [Firebase](https://firebase.google.com/products) - Used for storage of products and users information
+- [pytz](https://pypi.org/project/pytz/) - Used for formatting timezone
 
 ## How It Works
+
+Our project can be run on the console , preferably a [bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>) shell.
 
 ### Scraping
 
@@ -24,15 +26,19 @@ Productify helps track products from websites like Shoppe and Lazada.
 
 Using Flask as our web framework , it acts as a local web server to launch our website on localhost:5000.
 
-Websites are build with Html , Css , Bootstrap and Javascript. It is compiled by Flask built-in template website template system , Jinja template. The .html files can be found in templates folder , .css and .js files can be found in css folder located in the static folder.
+Websites are build with Html , Css , Bootstrap and Javascript. It is compiled by Flask built-in website template system , [Jinja template](https://jinja.palletsprojects.com/en/2.11.x/).
+
+Flask is used for backend programming of the website , for example routing of web pages. Each webpage has its speceifc function.
+
+api.py is the Flask file. .html files can be found in templates folder and .css and .js files can be found in css folder located in the static folder.
 
 ## Getting Started
 
 ### Prerequisites
 
-Productify is written in Python 3.6
+Productify is written in Python 3.6 . (Please ensure you have Python 3.6 installed)
 
-(Please ensure you have [Python 3.6](https://www.python.org/downloads/release/python-360/) installed)
+[Download here](https://www.python.org/downloads/release/python-360/)
 
 It recommend that you create a virtual environment with python 3.6
 
