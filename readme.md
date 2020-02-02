@@ -18,6 +18,10 @@ Productify empowers users to track products from websites like Shoppe and Lazada
 
 ```bash
 .
+├── __pycache__
+│   ├── classes.cpython-36.pyc
+│   ├── lazada.cpython-36.pyc
+│   └── shopee.cpython-36.pyc
 ├── api.py
 ├── classes.py
 ├── lazada.py
@@ -27,61 +31,8 @@ Productify empowers users to track products from websites like Shoppe and Lazada
 ├── shopee.py
 ├── static
 │   └── css
-│       ├── js
-│       │   ├── main.js
-│       │   └── map-custom.js
 │       ├── main.css
-│       ├── util.css
-│       └── vendor
-│           ├── animate
-│           │   └── animate.css
-│           ├── animsition
-│           │   ├── css
-│           │   │   ├── animsition.css
-│           │   │   └── animsition.min.css
-│           │   └── js
-│           │       ├── animsition.js
-│           │       └── animsition.min.js
-│           ├── bootstrap
-│           │   ├── css
-│           │   │   ├── bootstrap-grid.css
-│           │   │   ├── bootstrap-grid.css.map
-│           │   │   ├── bootstrap-grid.min.css
-│           │   │   ├── bootstrap-grid.min.css.map
-│           │   │   ├── bootstrap-reboot.css
-│           │   │   ├── bootstrap-reboot.css.map
-│           │   │   ├── bootstrap-reboot.min.css
-│           │   │   ├── bootstrap-reboot.min.css.map
-│           │   │   ├── bootstrap.css
-│           │   │   ├── bootstrap.css.map
-│           │   │   ├── bootstrap.min.css
-│           │   │   └── bootstrap.min.css.map
-│           │   └── js
-│           │       ├── bootstrap.js
-│           │       ├── bootstrap.min.js
-│           │       ├── popper.js
-│           │       ├── popper.min.js
-│           │       └── tooltip.js
-│           ├── countdowntime
-│           │   └── countdowntime.js
-│           ├── css-hamburgers
-│           │   ├── hamburgers.css
-│           │   └── hamburgers.min.css
-│           ├── daterangepicker
-│           │   ├── daterangepicker.css
-│           │   ├── daterangepicker.js
-│           │   ├── moment.js
-│           │   └── moment.min.js
-│           ├── jquery
-│           │   └── jquery-3.2.1.min.js
-│           ├── perfect-scrollbar
-│           │   ├── perfect-scrollbar.css
-│           │   └── perfect-scrollbar.min.js
-│           └── select2
-│               ├── select2.css
-│               ├── select2.js
-│               ├── select2.min.css
-│               └── select2.min.js
+│       └── util.css
 ├── templates
 │   ├── base.html
 │   ├── error.html
@@ -92,7 +43,6 @@ Productify empowers users to track products from websites like Shoppe and Lazada
 │   ├── signup.html
 │   └── track.html
 └── tracking.py
-
 
 ```
 
