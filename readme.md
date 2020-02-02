@@ -172,7 +172,17 @@ python3 api.py
 
 ## Demo
 
+### Login
+
+![](https://media.giphy.com/media/RfYzPYdKUFjYyx3KWY/giphy.gif)
+
+### Search
+
 ![](https://media.giphy.com/media/YmQG0wV5WDfZAVew4r/giphy.gif)
+
+### Track
+
+![](https://media.giphy.com/media/IdC2H57TYB4LinVCJr/giphy.gif)
 
 ## Authors
 
