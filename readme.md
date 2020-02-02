@@ -4,14 +4,14 @@ Productify helps track products from websites like Shoppe and Lazada.
 
 ## Built With
 
-- [Flask](https://flask.palletsprojects.com/en/1.1.x/) - The web framework used
-- [Bootstrap](https://getbootstrap.com/docs/4.4/getting-started/introduction/) - Used for styling of websites
+- [flask](https://flask.palletsprojects.com/en/1.1.x/) - The web framework used
+- [bootstrap](https://getbootstrap.com/docs/4.4/getting-started/introduction/) - Used for styling of websites
 - [requests](https://pypi.org/project/requests/) - Used to send http requests
 - [bs4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - Used for scraping
 - [fake_useragent](https://pypi.org/project/fake-useragent/) - Used for chnaging browser user agents
 - [lxml](https://lxml.de/) - Parser used for receive html pages
-- [Pandas](https://pandas.pydata.org/) - Used for data visualization
-- [Firebase](https://firebase.google.com/products) - Used for storage of products and users information
+- [pandas](https://pandas.pydata.org/) - Used for data visualization
+- [firebase](https://firebase.google.com/products) - Used for storage of products and users information
 - [pytz](https://pypi.org/project/pytz/) - Used for formatting timezone
 
 ## How It Works

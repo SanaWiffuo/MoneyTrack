@@ -72,24 +72,21 @@ if __name__ == "__main__":
             for i in result[name]:
                 if result[name][i]['platform'] == "Lazada":
                     url = result[name][i]['product url']
-                    print(url)
+                    print("Updating {}".format(url))
                     price = lazada(url)
-                    if price == 0:
-                        time.sleep(600)
-                        price = lazada(url)
                     now_utc = datetime.now(timezone('UTC'))
                     now_pacific = now_utc.astimezone(timezone('Singapore'))
                     t = now_pacific.strftime(fmt)
                     firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":t})
                 elif result[name][i]['platform'] == "Shopee":
                     url = result[name][i]['product url']
-                    print(url)
+                    print("Updating {}".format(url))
                     price = shopee(url)
                     now_utc = datetime.now(timezone('UTC'))
                     now_pacific = now_utc.astimezone(timezone('Singapore'))
                     t = now_pacific.strftime(fmt)
                     firebase.patch("/{}/{}".format(name,i),{"scrape-price":price,"Last-updated":t})
-                # time.sleep(120)
+                    
         print("Finished updating")
         time.sleep(1800)
         
