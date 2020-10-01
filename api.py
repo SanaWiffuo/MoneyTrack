@@ -58,8 +58,5 @@ def search(item, num):
     except Exception:
         return render_template("error.html")
 
-@app.errorhandler(404)
-def page_not_found(error):
-   return render_template('error.html', title = '404'), 404
 
 app.run()
