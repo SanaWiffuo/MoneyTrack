@@ -8,7 +8,7 @@ Productify empowers users to track products from websites like Shoppe and Lazada
 - [bootstrap](https://getbootstrap.com/docs/4.4/getting-started/introduction/) - Used for styling of websites
 - [requests](https://pypi.org/project/requests/) - Used to send http requests
 - [bs4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - Used for scraping
-- [fake_useragent](https://pypi.org/project/fake-useragent/) - Used for chnaging browser user agents
+- [fake_useragent](https://pypi.org/project/fake-useragent/) - Used for changing browser user agents
 - [lxml](https://lxml.de/) - Parser used for receive html pages
 - [pandas](https://pandas.pydata.org/) - Used for data visualization
 - [firebase](https://firebase.google.com/products) - Used for storage of products and users information
@@ -54,9 +54,9 @@ Our project is ran in the console , preferably a [bash](<https://en.wikipedia.or
 
 ### Scraping
 
-In our project, we do scraping from shopee and lazada.
+In our project, we do scraping from Shopee and Lazada.
 
-For shopee, we requests the shopee api to scrape the relevant information for the products.
+For Shopee, we requests the Shopee api to scrape the relevant information for the products.
 
 For lazada, we requests the lazada webpage and parse the web elements into json and then retrieve the product details from there.
 
